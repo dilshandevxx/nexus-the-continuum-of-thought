@@ -225,18 +225,25 @@ export function Hero() {
         <div className="grid gap-12 border-t border-white/10 pt-12 md:grid-cols-3 md:gap-4">
             
             {/* Left: Rating */}
-            <div className="flex flex-col gap-2">
-                <div className="flex items-center gap-2">
-                     <span className="text-4xl font-bold text-white">4.9/5</span>
+            <div className="flex flex-col items-start gap-4">
+                <div className="flex items-center gap-3">
+                     <span className="text-3xl font-bold text-white">4.9/5</span>
+                     <div className="flex gap-1">
+                        {[1, 2, 3, 4, 5].map((s) => (
+                            <svg key={s} width="16" height="16" viewBox="0 0 24 24" fill="currentColor" className="text-white">
+                                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+                            </svg>
+                        ))}
+                     </div>
                 </div>
-                <p className="max-w-[200px] text-xs text-zinc-500">
-                    The average rating of our quality and efficiency based on 1000+ completed projects
+                <p className="max-w-[240px] text-xs leading-relaxed text-zinc-500">
+                    The average rating of our quality and efficiency based on <span className="text-white">1000+ completed projects</span>
                 </p>
             </div>
 
              {/* Center: Buttons */}
             <div className="flex flex-col items-center justify-end gap-4 md:flex-row md:justify-center">
-                 <button className="group relative flex items-center gap-2 overflow-hidden rounded-lg bg-white px-8 py-4 text-sm font-bold uppercase tracking-wider text-black transition-all hover:bg-black hover:text-white hover:ring-1 hover:ring-white/20">
+                 <button className="group relative flex items-center gap-2 overflow-hidden rounded-lg bg-white px-8 py-4 text-sm font-bold uppercase tracking-wider text-black transition-all hover:bg-zinc-200">
                     <span className="relative z-10">Require a Call</span>
                     <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
                  </button>
@@ -247,8 +254,8 @@ export function Hero() {
 
             {/* Right: Description */}
             <div className="flex items-end justify-end">
-                <p className="max-w-xs text-right text-sm text-zinc-500">
-                    We build powerful software that simplifies your work and helps your business grow.
+                <p className="max-w-xs text-right text-sm leading-relaxed text-zinc-400">
+                    We build <span className="text-white">powerful software</span> that simplifies your work and helps your business grow.
                 </p>
             </div>
 
