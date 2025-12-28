@@ -4,43 +4,43 @@ import { cn } from "@/lib/utils";
 
 export function Navbar() {
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 py-4 md:px-12">
-      <div className="flex items-center gap-2">
-        <Link href="/" className="flex items-center gap-2 text-xl font-bold text-white">
-          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-white text-black">
-            <svg
-              width="20"
-              height="20"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="3"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
-              <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
-            </svg>
-          </div>
-          buzzabout
+    <nav className="fixed left-0 right-0 top-0 z-50 border-b border-white/5 bg-black/40 py-4 backdrop-blur-xl transition-all">
+      <div className="mx-auto flex h-full max-w-7xl items-center justify-between px-4 md:px-12 lg:px-20">
+        
+        {/* Logo */}
+        <Link href="/" className="flex items-center gap-2 text-xl font-bold tracking-tighter text-white">
+            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-white text-black shadow-[0_0_15px_rgba(255,255,255,0.3)]">
+                <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                >
+                <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
+                </svg>
+            </div>
+            NEXUS
         </Link>
+        
+        {/* Desktop Nav */}
+        <div className="hidden items-center gap-8 md:flex">
+             <div className="flex items-center gap-6">
+                 {["Our Portfolio", "Services", "Tech Expertise", "About Us"].map((item) => (
+                     <Link key={item} href="#" className="text-xs font-medium uppercase tracking-widest text-zinc-400 transition-colors hover:text-white">
+                         {item}
+                     </Link>
+                 ))}
+             </div>
+             
+             <button className="rounded-lg bg-white px-6 py-2.5 text-xs font-bold uppercase tracking-wider text-black transition-all hover:bg-zinc-200">
+                 Contact Us
+             </button>
+        </div>
       </div>
-
-      <div className="hidden items-center gap-4 md:flex">
-        <button className="rounded-full px-4 py-2 text-sm font-medium text-white transition-colors hover:text-gray-300">
-          Log in
-        </button>
-        <button className="rounded-full bg-white px-5 py-2.5 text-sm font-semibold text-black transition-transform hover:scale-105">
-          Try for free
-        </button>
-        <button className="text-white">
-          <Menu className="h-6 w-6" />
-        </button>
-      </div>
-
-      <button className="text-white md:hidden">
-        <Menu className="h-6 w-6" />
-      </button>
     </nav>
   );
 }
