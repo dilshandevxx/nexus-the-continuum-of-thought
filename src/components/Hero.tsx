@@ -157,53 +157,62 @@ export function Hero() {
                       animate="visible"
                       exit="exit"
                     >
-                      {WORDS[index].split(" ").map((word, i) => (
-                        <motion.span
-                          key={`${word}-${i}`}
-                          className="inline-block bg-gradient-to-b from-white to-white/70 bg-clip-text text-transparent"
-                          custom={i}
-                          variants={{
-                              hidden: { 
-                                  opacity: 0, 
-                                  y: Math.random() * 100 - 50, 
-                                  x: Math.random() * 100 - 50,
-                                  rotate: Math.random() * 30 - 15,
-                                  scale: 0.5,
-                                  filter: "blur(10px)"
-                              },
-                              visible: { 
-                                  opacity: 1, 
-                                  y: 0, 
-                                  x: 0, 
-                                  rotate: 0,
-                                  scale: 1,
-                                  filter: "blur(0px)",
-                                  transition: {
-                                      type: "spring",
-                                      damping: 25,
-                                      stiffness: 120,
-                                      duration: 1.2,
-                                      delay: i * 0.1 // Staggered entry
-                                  }
-                              },
-                              exit: { 
-                                  opacity: 0, 
-                                  y: 100 + Math.random() * 100, // Fall towards bottom
-                                  x: Math.random() * 400 - 200, // Wide spread to separate words
-                                  rotate: Math.random() * 90 - 45, // Chaotic rotation
-                                  scale: 0.5,
-                                  filter: "blur(8px)",
-                                  transition: {
-                                      duration: 1.0,
-                                      ease: "easeIn",
-                                      delay: i * 0.05 // Slight stagger
-                                  }
-                              }
-                          }}
-                        >
-                          {word}
-                        </motion.span>
-                      ))}
+                      {WORDS[index].split(" ").map((word, i) => {
+                        // Generate random styles for this specific word instance
+                        const weights = ["font-light", "font-normal", "font-medium", "font-bold", "font-black"];
+                        const weight = weights[Math.floor(Math.random() * weights.length)];
+                        const isItalic = Math.random() > 0.8 ? "italic" : "non-italic";
+                        const tracking = Math.random() > 0.5 ? "tracking-tighter" : "tracking-widest";
+                        
+                        return (
+                          <motion.span
+                            key={`${word}-${i}`}
+                            className={`inline-block bg-gradient-to-b from-white to-white/70 bg-clip-text text-transparent ${weight} ${isItalic} ${tracking}`}
+                            custom={i}
+                            variants={{
+                                hidden: { 
+                                    opacity: 0, 
+                                    y: Math.random() * 100 - 50, 
+                                    x: Math.random() * 100 - 50,
+                                    rotate: Math.random() * 30 - 15,
+                                    scale: 0.5,
+                                    filter: "blur(10px)"
+                                },
+                                visible: { 
+                                    opacity: 1, 
+                                    y: 0, 
+                                    x: 0, 
+                                    rotate: 0,
+                                    scale: 1,
+                                    filter: "blur(0px)",
+                                    transition: {
+                                        type: "spring",
+                                        damping: 25,
+                                        stiffness: 120,
+                                        duration: 1.2,
+                                        delay: i * 0.1
+                                    }
+                                },
+                                exit: { 
+                                    opacity: 0, 
+                                    // Completely random exit direction for EVERY word
+                                    y: (Math.random() > 0.5 ? -1 : 1) * (150 + Math.random() * 100), 
+                                    x: (Math.random() > 0.5 ? -1 : 1) * (150 + Math.random() * 100), 
+                                    rotate: Math.random() * 90 - 45,
+                                    scale: 0.5,
+                                    filter: "blur(8px)",
+                                    transition: {
+                                        duration: 0.8,
+                                        ease: "easeInOut",
+                                        delay: i * 0.05
+                                    }
+                                }
+                            }}
+                          >
+                            {word}
+                          </motion.span>
+                        );
+                      })}
                     </motion.div>
                   </AnimatePresence>
                 )}
