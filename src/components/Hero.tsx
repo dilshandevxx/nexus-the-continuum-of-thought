@@ -87,7 +87,7 @@ export function Hero() {
       <div className="pointer-events-none absolute bottom-0 right-0 h-96 w-96 rounded-full bg-white/5 blur-[100px]" />
 
       {/* Random Floating Background Images */}
-      <div className="absolute inset-0 z-0 overflow-hidden opacity-20">
+      <div className="absolute inset-0 z-0 overflow-hidden">
         {isMounted && backgroundElements.map((el) => (
             <motion.div
                 key={el.id}
@@ -101,7 +101,7 @@ export function Hero() {
                 animate={{ 
                     top: `${el.endTop}%`,
                     left: `${el.endLeft}%`,
-                    opacity: [0, 0.6, 0.6, 0], // Fade in start, Fade out end
+                    opacity: [0, 0.5, 1, 0.5, 0], // Continuous smooth fade cycle
                 }}
                 transition={{
                     duration: el.duration,
@@ -114,7 +114,7 @@ export function Hero() {
                   src={el.src}
                   alt="Background element"
                   fill
-                  className="object-cover opacity-80"
+                  className="object-cover"
                 />
             </motion.div>
         ))}

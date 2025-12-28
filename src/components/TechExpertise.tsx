@@ -13,7 +13,7 @@ const ROWS = [
 
 export function TechExpertise() {
   return (
-        <section className="relative w-full overflow-hidden bg-[#0A0A0A] py-24 text-white">
+        <section className="relative w-full overflow-hidden bg-transparent py-24 text-white">
       <div className="mx-auto max-w-7xl py-16">
         <div className="mb-16 px-8 text-center md:px-12">
              <h2 className="mb-4 text-sm font-bold uppercase tracking-widest text-zinc-500">
