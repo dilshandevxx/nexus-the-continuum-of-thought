@@ -4,12 +4,12 @@ import { cn } from "@/lib/utils";
 
 export function Navbar() {
   return (
-    <nav className="fixed left-0 right-0 top-0 z-50 border-b border-white/5 bg-black/40 py-4 backdrop-blur-xl transition-all">
+    <nav className="fixed left-0 right-0 top-0 z-50 border-b border-white/5 bg-black/50 py-4 backdrop-blur-2xl transition-all">
       <div className="mx-auto flex h-full max-w-7xl items-center justify-between px-4 md:px-12 lg:px-20">
         
         {/* Logo */}
-        <Link href="/" className="flex items-center gap-2 text-xl font-bold tracking-tighter text-white">
-            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-white text-black shadow-[0_0_15px_rgba(255,255,255,0.3)]">
+        <Link href="/" className="group flex items-center gap-2 text-xl font-bold tracking-tighter text-white">
+            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-white text-black shadow-[0_0_15px_rgba(255,255,255,0.3)] transition-transform group-hover:rotate-90">
                 <svg
                 width="20"
                 height="20"
@@ -28,16 +28,17 @@ export function Navbar() {
         
         {/* Desktop Nav */}
         <div className="hidden items-center gap-8 md:flex">
-             <div className="flex items-center gap-6">
+             <div className="flex items-center gap-8">
                  {["Our Portfolio", "Services", "Tech Expertise", "About Us"].map((item) => (
-                     <Link key={item} href="#" className="text-xs font-medium uppercase tracking-widest text-zinc-400 transition-colors hover:text-white">
+                     <Link key={item} href="#" className="group relative text-xs font-medium uppercase tracking-widest text-zinc-400 transition-colors hover:text-white">
                          {item}
+                         <span className="absolute -bottom-1 left-0 h-[1px] w-0 bg-white transition-all duration-300 group-hover:w-full" />
                      </Link>
                  ))}
              </div>
              
-             <button className="rounded-lg bg-white px-6 py-2.5 text-xs font-bold uppercase tracking-wider text-black transition-all hover:bg-zinc-200">
-                 Contact Us
+             <button className="group relative overflow-hidden rounded-lg bg-white px-6 py-2.5 text-xs font-bold uppercase tracking-wider text-black transition-all hover:bg-black hover:text-white hover:ring-1 hover:ring-white/20">
+                 <span className="relative z-10">Contact Us</span>
              </button>
         </div>
       </div>

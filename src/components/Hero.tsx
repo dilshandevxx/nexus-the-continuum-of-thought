@@ -1,10 +1,18 @@
 "use client";
 
 import { useEffect, useState, useRef } from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
 import Image from "next/image";
+import { ArrowUpRight } from "lucide-react";
 
-const WORDS = ["Innovation", "Scale", "Growth", "Impact"];
+const WORDS = [
+  "Engineering Impact",
+  "AI Innovation",
+  "AI Automation",
+  "Web Design",
+  "Web Development",
+  "AI Solutions",
+];
 
 // User uploaded images
 const CARDS_COLUMN_1 = [
@@ -45,10 +53,6 @@ function FallingColumn({
           ease: "linear",
           repeatType: "loop",
         }}
-        style={{
-             // Duplicate the array to ensure seamless looping
-             // We need enough height to cover the screen plus scroll
-        }}
       >
         {[...images, ...images, ...images].map((src, i) => {
             // Deterministic "random" values based on index to avoid hydration mismatch
@@ -80,6 +84,17 @@ function FallingColumn({
 }
 
 export function Hero() {
+  const [index, setIndex] = useState(0);
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+    const interval = setInterval(() => {
+      setIndex((prev) => (prev + 1) % WORDS.length);
+    }, 4000);
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <section className="relative flex min-h-screen w-full flex-col justify-between overflow-hidden bg-[#0A0A0A] px-4 py-24 text-white md:px-12 lg:px-20">
       {/* Background Gradients */}
@@ -125,10 +140,76 @@ export function Hero() {
         </div>
 
         {/* Center Massive Text */}
-        <div className="flex flex-1 items-center justify-center">
-            <h1 className="text-[12vw] font-bold leading-none tracking-tighter text-white mix-blend-overlay md:text-[15vw]">
-                NEXUS
-            </h1>
+        <div className="flex flex-1 flex-col items-center justify-center gap-8">
+            <div className="flex flex-col items-center">
+              <h1 className="text-[12vw] font-bold leading-none tracking-tighter text-white mix-blend-overlay md:text-[15vw]">
+                  NEXUS
+              </h1>
+              
+              {/* Advanced Floating Text */}
+              <div className="relative flex h-24 w-full items-center justify-center overflow-visible text-2xl font-medium tracking-widest md:text-4xl">
+                {isMounted && (
+                  <AnimatePresence mode="wait">
+                    <motion.div
+                      key={index}
+                      className="absolute flex gap-4 whitespace-nowrap"
+                      initial="hidden"
+                      animate="visible"
+                      exit="exit"
+                    >
+                      {WORDS[index].split(" ").map((word, i) => (
+                        <motion.span
+                          key={`${word}-${i}`}
+                          className="inline-block bg-gradient-to-b from-white to-white/70 bg-clip-text text-transparent"
+                          custom={i}
+                          variants={{
+                              hidden: { 
+                                  opacity: 0, 
+                                  y: Math.random() * 100 - 50, 
+                                  x: Math.random() * 100 - 50,
+                                  rotate: Math.random() * 30 - 15,
+                                  scale: 0.5,
+                                  filter: "blur(10px)"
+                              },
+                              visible: { 
+                                  opacity: 1, 
+                                  y: 0, 
+                                  x: 0, 
+                                  rotate: 0,
+                                  scale: 1,
+                                  filter: "blur(0px)",
+                                  transition: {
+                                      type: "spring",
+                                      damping: 25,
+                                      stiffness: 120,
+                                      duration: 1.2,
+                                      delay: i * 0.1 // Staggered entry
+                                  }
+                              },
+                              exit: { 
+                                  opacity: 0, 
+                                  y: 100 + Math.random() * 100, // Fall towards bottom
+                                  x: Math.random() * 400 - 200, // Wide spread to separate words
+                                  rotate: Math.random() * 90 - 45, // Chaotic rotation
+                                  scale: 0.5,
+                                  filter: "blur(8px)",
+                                  transition: {
+                                      duration: 1.0,
+                                      ease: "easeIn",
+                                      delay: i * 0.05 // Slight stagger
+                                  }
+                              }
+                          }}
+                        >
+                          {word}
+                        </motion.span>
+                      ))}
+                    </motion.div>
+                  </AnimatePresence>
+                )}
+              </div>
+
+            </div>
         </div>
 
         {/* Bottom Section */}
@@ -146,10 +227,11 @@ export function Hero() {
 
              {/* Center: Buttons */}
             <div className="flex flex-col items-center justify-end gap-4 md:flex-row md:justify-center">
-                 <button className="whitespace-nowrap rounded-lg bg-white px-8 py-4 text-sm font-bold uppercase tracking-wider text-black transition-all hover:bg-zinc-200">
-                    Require a Call
+                 <button className="group relative flex items-center gap-2 overflow-hidden rounded-lg bg-white px-8 py-4 text-sm font-bold uppercase tracking-wider text-black transition-all hover:bg-black hover:text-white hover:ring-1 hover:ring-white/20">
+                    <span className="relative z-10">Require a Call</span>
+                    <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
                  </button>
-                 <button className="whitespace-nowrap rounded-lg border border-white/20 bg-transparent px-8 py-4 text-sm font-bold uppercase tracking-wider text-white transition-all hover:bg-white/5">
+                 <button className="whitespace-nowrap rounded-lg border border-white/20 bg-transparent px-8 py-4 text-sm font-bold uppercase tracking-wider text-white transition-all hover:bg-white hover:text-black">
                     See All Services
                  </button>
             </div>
@@ -157,7 +239,7 @@ export function Hero() {
             {/* Right: Description */}
             <div className="flex items-end justify-end">
                 <p className="max-w-xs text-right text-sm text-zinc-500">
-                    We create innovative software products that automate processes, optimize businesses, and enhance efficiency.
+                    We build powerful software that simplifies your work and helps your business grow.
                 </p>
             </div>
 
