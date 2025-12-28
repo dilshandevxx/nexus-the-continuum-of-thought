@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useMemo } from "react";
 import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import { ArrowUpRight } from "lucide-react";
@@ -14,78 +14,63 @@ const WORDS = [
   "AI Solutions",
 ];
 
-// User uploaded images
-const CARDS_COLUMN_1 = [
-  "/hero_user_1.jpg",
-  "/hero_user_2.png",
-  "/hero_user_3.jpg",
+// Consolidated images
+const BACKGROUND_IMAGES = [
+  "/hero_user_1.jpg", "/hero_user_2.png", "/hero_user_3.jpg",
+  "/hero_user_4.png", "/hero_user_5.png", "/hero_user_1.jpg",
+  "/hero_user_2.png", "/hero_user_3.jpg", "/hero_user_4.png",
 ];
-const CARDS_COLUMN_2 = [
-  "/hero_user_4.png",
-  "/hero_user_5.png",
-  "/hero_user_1.jpg",
-];
-const CARDS_COLUMN_3 = [
-  "/hero_user_2.png",
-  "/hero_user_3.jpg",
-  "/hero_user_4.png",
-];
-
-function FallingColumn({
-  images,
-  yOffset = 0,
-  duration = 20,
-}: {
-  images: string[];
-  yOffset?: number;
-  duration?: number;
-}) {
-  return (
-    <div className="relative flex h-full w-full flex-col gap-8 overflow-hidden">
-      <motion.div
-        className="flex flex-col gap-12" // Increased gap for better spacing with offsets
-        animate={{
-          y: ["-50%", "0%"],
-        }}
-        transition={{
-          duration: duration,
-          repeat: Infinity,
-          ease: "linear",
-          repeatType: "loop",
-        }}
-      >
-        {[...images, ...images, ...images].map((src, i) => {
-            // Deterministic "random" values based on index to avoid hydration mismatch
-            const rotation = (i * 17 % 20) - 10; // -10 to 10 degrees
-            const xOffset = (i * 23 % 60) - 30; // -30% to 30% horizontal shift
-            const scale = 0.9 + (i * 5 % 3) * 0.1; // 0.9, 1.0, 1.1 scale
-
-            return (
-              <div
-                key={i}
-                className="relative aspect-[4/3] w-full overflow-hidden rounded-xl border border-white/10 bg-white/5 shadow-2xl backdrop-blur-sm"
-                style={{
-                    transform: `rotate(${rotation}deg) translateX(${xOffset}%) scale(${scale})`,
-                    zIndex: i % 10, // localized z-index
-                }}
-              >
-                <Image
-                  src={src}
-                  alt="Social Media Card"
-                  fill
-                  className="object-cover opacity-80"
-                />
-              </div>
-            );
-        })}
-      </motion.div>
-    </div>
-  );
-}
 
 export function Hero() {
   const [index, setIndex] = useState(0);
   const [isMounted, setIsMounted] = useState(false);
+
+  // Generate stable random values for background images once on mount
+  const backgroundElements = useMemo(() => {
+    return BACKGROUND_IMAGES.map((src, i) => {
+      // Random Start Position (Inside Viewport)
+      const startLeft = Math.random() * 100; // 0-100%
+      const startTop = Math.random() * 100; // 0-100%
+      
+      // Determine Exit Wall (0: Top, 1: Right, 2: Bottom, 3: Left)
+      const exitWall = Math.floor(Math.random() * 4);
+      let endLeft = startLeft;
+      let endTop = startTop;
+
+      // Calculate Off-Screen Destination
+      // We add a large random delta to ensure it crosses the screen or drifts naturally
+      switch(exitWall) {
+        case 0: // Top
+          endTop = -20; // Exit top
+          endLeft += (Math.random() * 40 - 20); // Drift X slightly
+          break;
+        case 1: // Right
+          endLeft = 120; // Exit right
+          endTop += (Math.random() * 40 - 20); // Drift Y slightly
+          break;
+        case 2: // Bottom
+          endTop = 120; // Exit bottom
+          endLeft += (Math.random() * 40 - 20); // Drift X
+          break;
+        case 3: // Left
+          endLeft = -20; // Exit left
+          endTop += (Math.random() * 40 - 20); // Drift Y
+          break;
+      }
+
+      return {
+        src,
+        id: i,
+        startLeft,
+        startTop,
+        endLeft,
+        endTop,
+        duration: 20 + Math.random() * 20, // 20-40s duration
+        scale: 0.5 + Math.random() * 0.5,
+        delay: Math.random() * -30, // Negative delay for instant start scattered
+      };
+    });
+  }, []);
 
   useEffect(() => {
     setIsMounted(true);
@@ -101,24 +86,39 @@ export function Hero() {
       <div className="pointer-events-none absolute left-0 top-0 h-96 w-96 rounded-full bg-white/5 blur-[100px]" />
       <div className="pointer-events-none absolute bottom-0 right-0 h-96 w-96 rounded-full bg-white/5 blur-[100px]" />
 
-      {/* Falling Columns Background */}
-      <div className="absolute inset-0 z-0 flex justify-between gap-8 px-4 opacity-20 md:px-20 lg:gap-12">
-          {/* Left Column */}
-          <div className="hidden h-[150%] w-1/4 -translate-y-[20%] lg:block">
-            <FallingColumn images={CARDS_COLUMN_1} duration={35} />
-          </div>
-          {/* Right Column */}
-          <div className="hidden h-[150%] w-1/4 -translate-y-[20%] lg:block">
-            <FallingColumn images={CARDS_COLUMN_3} duration={25} />
-          </div>
+      {/* Random Floating Background Images */}
+      <div className="absolute inset-0 z-0 overflow-hidden opacity-20">
+        {isMounted && backgroundElements.map((el) => (
+            <motion.div
+                key={el.id}
+                className="absolute aspect-[4/3] w-64 overflow-hidden rounded-xl border border-white/10 bg-white/5 shadow-2xl backdrop-blur-sm"
+                initial={{ 
+                    top: `${el.startTop}%`,
+                    left: `${el.startLeft}%`,
+                    scale: el.scale,
+                    opacity: 0,
+                }}
+                animate={{ 
+                    top: `${el.endTop}%`,
+                    left: `${el.endLeft}%`,
+                    opacity: [0, 0.6, 0.6, 0], // Fade in start, Fade out end
+                }}
+                transition={{
+                    duration: el.duration,
+                    ease: "linear",
+                    repeat: Infinity,
+                    delay: el.delay,
+                }}
+            >
+                <Image
+                  src={el.src}
+                  alt="Background element"
+                  fill
+                  className="object-cover opacity-80"
+                />
+            </motion.div>
+        ))}
       </div>
-      
-       {/* Mobile Falling Column */}
-       <div className="absolute inset-0 z-0 flex justify-center opacity-10 lg:hidden">
-            <div className="h-[150%] w-3/4 -translate-y-[20%]">
-                 <FallingColumn images={CARDS_COLUMN_2} duration={40} />
-            </div>
-       </div>
 
 
       {/* Main Content Container - Z-Index to sit above background */}
