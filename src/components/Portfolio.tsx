@@ -28,7 +28,7 @@ const PROJECTS = [
 
 export function Portfolio() {
   return (
-    <section className="relative w-full bg-[#050505] px-4 py-24 text-white md:px-12 lg:px-20">
+    <section className="relative w-full bg-transparent px-4 py-24 text-white md:px-12 lg:px-20">
       <div className="mx-auto flex max-w-7xl flex-col gap-16 px-8 md:px-12">
         <div className="flex flex-col items-start gap-4 md:flex-row md:items-end md:justify-between">
           <div>

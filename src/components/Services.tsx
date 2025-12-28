@@ -38,7 +38,7 @@ const SERVICES = [
 
 export function Services() {
   return (
-    <section className="relative w-full bg-[#0A0A0A] px-4 py-24 text-white md:px-12 lg:px-20">
+    <section className="relative w-full bg-transparent px-4 py-24 text-white md:px-12 lg:px-20">
       <div className="mx-auto flex max-w-7xl flex-col gap-12 px-8 md:px-12">
         <div className="text-center md:text-left">
           <h2 className="mb-4 text-sm font-bold uppercase tracking-widest text-zinc-500">

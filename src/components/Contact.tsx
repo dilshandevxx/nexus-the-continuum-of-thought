@@ -5,7 +5,7 @@ import { Mail, MapPin, Phone } from "lucide-react";
 
 export function Contact() {
   return (
-    <section className="relative w-full overflow-hidden bg-[#050505] px-4 py-24 text-white md:px-12 lg:px-20">
+    <section className="relative w-full overflow-hidden bg-transparent px-4 py-24 text-white md:px-12 lg:px-20">
       {/* Background Ambience */}
       <div className="pointer-events-none absolute -right-20 top-20 z-0 opacity-[0.03]">
         <span className="text-[15vw] font-bold leading-none">LET'S TALK</span>
