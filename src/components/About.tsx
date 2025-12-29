@@ -131,7 +131,7 @@ export function About() {
               </motion.div>
             </div>
 
-             {/* Graphic Side - The Digital Prism */}
+             {/* Graphic Side - The Digital Prism (Recommended) */}
              <motion.div 
                 initial={{ opacity: 0, scale: 0.8 }}
                 whileInView={{ opacity: 1, scale: 1 }}
@@ -139,38 +139,45 @@ export function About() {
                 transition={{ delay: 0.3, duration: 0.8 }}
                 className="relative hidden h-96 w-96 lg:flex items-center justify-center perspective-[1000px]"
              >
+                {/* Premium Glow - Subtle & Clean */}
                 <div className="absolute inset-0 -z-10 bg-white/5 blur-[80px] rounded-full" />
                 
                 {/* Prism Container */}
                 <div className="relative flex h-full w-full items-center justify-center transform-style-3d">
                     
-                    {/* Rotating Pyramid */}
+                    {/* Rotating Pyramid - Crystalline Structure */}
                     <motion.div
                         animate={{ rotateX: 360, rotateY: 360, rotateZ: 180 }}
-                        transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
+                        transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
                         className="relative h-48 w-48 transform-style-3d"
                     >
-                         {/* Triangle Faces */}
+                         {/* Triangle Faces - Glassmorphic Silver */}
                          {/* Front */}
                          <div 
                             className="absolute bottom-0 left-0 border-l-[100px] border-r-[100px] border-b-[173px] border-l-transparent border-r-transparent border-b-white/10 backdrop-blur-sm"
                             style={{ transform: "rotateY(0deg) translateZ(58px) rotateX(30deg)", transformOrigin: "50% 100%" }}
                          >
                             <div className="absolute top-[50px] left-[-50px] h-20 w-20 bg-gradient-to-t from-white/20 to-transparent blur-md" />
+                            {/* Subtle Tech Grid Overlay on Face */}
+                            <div className="absolute inset-0 border-b-[173px] border-l-[100px] border-r-[100px] border-l-transparent border-r-transparent border-b-white/5" 
+                                 style={{ clipPath: "polygon(50% 0%, 0% 100%, 100% 100%)", backgroundSize: "10px 10px", backgroundImage: "radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px)" }} 
+                            />
                          </div>
                          
                          {/* Back Right */}
                          <div 
                             className="absolute bottom-0 left-0 border-l-[100px] border-r-[100px] border-b-[173px] border-l-transparent border-r-transparent border-b-white/5 backdrop-blur-sm"
                             style={{ transform: "rotateY(120deg) translateZ(58px) rotateX(30deg)", transformOrigin: "50% 100%" }}
-                         />
+                         >
+                             <div className="absolute inset-0 border-b-[173px] border-l-[100px] border-r-[100px] border-l-transparent border-r-transparent border-b-white/5" style={{ clipPath: "polygon(50% 0%, 0% 100%, 100% 100%)" }} />
+                         </div>
 
                          {/* Back Left */}
                          <div 
                             className="absolute bottom-0 left-0 border-l-[100px] border-r-[100px] border-b-[173px] border-l-transparent border-r-transparent border-b-white/10 backdrop-blur-sm"
                             style={{ transform: "rotateY(240deg) translateZ(58px) rotateX(30deg)", transformOrigin: "50% 100%" }}
                          >
-                             {/* Internal Spark */}
+                             {/* Internal Spark - Pure White */}
                              <div className="absolute top-[80px] left-[0px] h-2 w-2 rounded-full bg-white shadow-[0_0_20px_white] animate-ping" />
                          </div>
 
@@ -184,17 +191,17 @@ export function About() {
                          />
                     </motion.div>
 
-                    {/* Orbiting Particles */}
+                    {/* Orbiting Precision Rings */}
                     <motion.div
                         animate={{ rotate: 360 }}
-                        transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
-                        className="absolute h-64 w-64 rounded-full border border-dashed border-white/10"
+                        transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
+                        className="absolute h-64 w-64 rounded-full border border-dashed border-white/20"
                         style={{ transform: "rotateX(70deg)" }}
                     />
                      <motion.div
                         animate={{ rotate: -360 }}
-                        transition={{ duration: 12, repeat: Infinity, ease: "linear" }}
-                        className="absolute h-80 w-80 rounded-full border border-white/5"
+                        transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+                        className="absolute h-80 w-80 rounded-full border border-white/10"
                         style={{ transform: "rotateX(70deg)" }}
                     >
                          <div className="absolute top-0 left-1/2 h-2 w-2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-white" />
@@ -202,7 +209,7 @@ export function About() {
 
                 </div>
 
-                {/* Floating "Stability" Card */}
+                {/* Floating Minimalist Cards */}
                 <motion.div 
                     animate={{ y: [0, -15, 0] }}
                     transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
@@ -210,7 +217,7 @@ export function About() {
                 >
                     <div className="flex items-center gap-2">
                         <Triangle size={14} className="text-white" />
-                        <span className="text-xs font-medium text-white">Peak Performance</span>
+                        <span className="text-xs font-medium text-white">Stability</span>
                     </div>
                 </motion.div>
 
@@ -221,7 +228,7 @@ export function About() {
                 >
                     <div className="flex items-center gap-2">
                         <Zap size={14} className="text-white" />
-                        <span className="text-xs font-medium text-white">High Energy</span>
+                        <span className="text-xs font-medium text-white">Power</span>
                     </div>
                 </motion.div>
 
