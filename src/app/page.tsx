@@ -17,7 +17,7 @@ export default function Home() {
          <ParticleBackground />
          <div className="relative z-10">
             <About />
-            <Services />
+            <Services isPreview />
             <Portfolio />
             <TechExpertise />
             <Contact />

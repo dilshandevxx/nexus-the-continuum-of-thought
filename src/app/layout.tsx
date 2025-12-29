@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import { Toaster } from "sonner";
 import SmoothScroll from "@/components/SmoothScroll";
 import "./globals.css";
 
@@ -10,6 +11,8 @@ export const metadata: Metadata = {
   description: "Engineering digital excellence for the world's most ambitious brands.",
 };
 
+// ... existing code ...
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -19,6 +22,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${inter.className} antialiased`}>
         <SmoothScroll />
+        <Toaster position="top-center" theme="dark" />
         {children}
       </body>
     </html>

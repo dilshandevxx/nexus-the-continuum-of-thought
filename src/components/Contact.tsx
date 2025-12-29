@@ -1,9 +1,62 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Mail, MapPin, Phone } from "lucide-react";
+import { Mail, MapPin, Phone, Loader2 } from "lucide-react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import * as z from "zod";
+import { toast } from "sonner";
+import { submitContactForm } from "@/app/actions/contact";
+import { useTransition } from "react";
+import { cn } from "@/lib/utils";
+
+const formSchema = z.object({
+  firstName: z.string().min(1, "First name is required"),
+  lastName: z.string().min(1, "Last name is required"),
+  email: z.string().email("Invalid email address"),
+  message: z.string().min(10, "Message must be at least 10 characters long"),
+});
+
+type FormData = z.infer<typeof formSchema>;
 
 export function Contact() {
+  const [isPending, startTransition] = useTransition();
+  
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm<FormData>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      firstName: "",
+      lastName: "",
+      email: "",
+      message: "",
+    },
+  });
+
+  const onSubmit = (data: FormData) => {
+    startTransition(async () => {
+      const formData = new FormData();
+      formData.append("firstName", data.firstName);
+      formData.append("lastName", data.lastName);
+      formData.append("email", data.email);
+      formData.append("message", data.message);
+
+      const result = await submitContactForm({ success: false }, formData);
+
+      if (result.success) {
+        toast.success(result.message);
+        reset();
+      } else {
+        toast.error(result.message);
+        console.error(result.errors);
+      }
+    });
+  };
+
   return (
     <section className="relative w-full overflow-hidden bg-transparent px-4 py-24 text-white md:px-12 lg:px-20">
       {/* Background Ambience */}
@@ -14,7 +67,12 @@ export function Contact() {
       <div className="relative z-10 mx-auto flex max-w-7xl flex-col gap-16 px-8 md:px-12 lg:flex-row">
         
         {/* Contact Info */}
-        <div className="flex flex-1 flex-col justify-center gap-10">
+        <motion.div 
+            initial={{ opacity: 0, x: -50 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8 }}
+            className="flex flex-1 flex-col justify-center gap-10"
+        >
             <div>
                 <h2 className="mb-4 text-sm font-bold uppercase tracking-widest text-zinc-400">
                     Get in Touch
@@ -48,11 +106,12 @@ export function Contact() {
                     </motion.div>
                 ))}
             </div>
-        </div>
+        </motion.div>
 
         {/* Contact Form */}
         <div className="flex-1">
           <motion.form 
+            onSubmit={handleSubmit(onSubmit)}
             initial={{ opacity: 0, x: 20 }}
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6 }}
@@ -61,27 +120,75 @@ export function Contact() {
             <div className="grid gap-6 md:grid-cols-2">
                 <div className="group flex flex-col gap-2">
                     <label className="text-sm font-medium text-zinc-400 transition-colors group-focus-within:text-white">First Name</label>
-                    <input type="text" className="rounded-lg border border-white/10 bg-white/5 px-4 py-3 text-white placeholder-zinc-600 transition-all focus:border-white/50 focus:bg-white/10 focus:outline-none" placeholder="John" />
+                    <input 
+                      {...register("firstName")}
+                      type="text" 
+                      className={cn(
+                        "rounded-lg border bg-white/5 px-4 py-3 text-white placeholder-zinc-600 transition-all focus:border-white/50 focus:bg-white/10 focus:outline-none",
+                        errors.firstName ? "border-red-500 focus:border-red-500" : "border-white/10"
+                      )}
+                      placeholder="John" 
+                    />
+                    {errors.firstName && <span className="text-xs text-red-500">{errors.firstName.message}</span>}
                 </div>
                 <div className="group flex flex-col gap-2">
                     <label className="text-sm font-medium text-zinc-400 transition-colors group-focus-within:text-white">Last Name</label>
-                    <input type="text" className="rounded-lg border border-white/10 bg-white/5 px-4 py-3 text-white placeholder-zinc-600 transition-all focus:border-white/50 focus:bg-white/10 focus:outline-none" placeholder="Doe" />
+                    <input 
+                      {...register("lastName")}
+                      type="text" 
+                      className={cn(
+                        "rounded-lg border bg-white/5 px-4 py-3 text-white placeholder-zinc-600 transition-all focus:border-white/50 focus:bg-white/10 focus:outline-none",
+                        errors.lastName ? "border-red-500 focus:border-red-500" : "border-white/10"
+                      )}
+                      placeholder="Doe" 
+                    />
+                    {errors.lastName && <span className="text-xs text-red-500">{errors.lastName.message}</span>}
                 </div>
             </div>
             
             <div className="group flex flex-col gap-2">
                 <label className="text-sm font-medium text-zinc-400 transition-colors group-focus-within:text-white">Email Address</label>
-                <input type="email" className="rounded-lg border border-white/10 bg-white/5 px-4 py-3 text-white placeholder-zinc-600 transition-all focus:border-white/50 focus:bg-white/10 focus:outline-none" placeholder="john@example.com" />
+                <input 
+                  {...register("email")}
+                  type="email" 
+                  className={cn(
+                    "rounded-lg border bg-white/5 px-4 py-3 text-white placeholder-zinc-600 transition-all focus:border-white/50 focus:bg-white/10 focus:outline-none",
+                    errors.email ? "border-red-500 focus:border-red-500" : "border-white/10"
+                  )}
+                  placeholder="john@example.com" 
+                />
+                {errors.email && <span className="text-xs text-red-500">{errors.email.message}</span>}
             </div>
 
             <div className="group flex flex-col gap-2">
                 <label className="text-sm font-medium text-zinc-400 transition-colors group-focus-within:text-white">Message</label>
-                <textarea rows={4} className="rounded-lg border border-white/10 bg-white/5 px-4 py-3 text-white placeholder-zinc-600 transition-all focus:border-white/50 focus:bg-white/10 focus:outline-none" placeholder="Tell us about your project..." />
+                <textarea 
+                  {...register("message")}
+                  rows={4} 
+                  className={cn(
+                    "rounded-lg border bg-white/5 px-4 py-3 text-white placeholder-zinc-600 transition-all focus:border-white/50 focus:bg-white/10 focus:outline-none",
+                    errors.message ? "border-red-500 focus:border-red-500" : "border-white/10"
+                  )}
+                  placeholder="Tell us about your project..." 
+                />
+                {errors.message && <span className="text-xs text-red-500">{errors.message.message}</span>}
             </div>
 
-            <button className="group mt-2 flex w-full items-center justify-center gap-2 rounded-lg bg-white px-6 py-4 text-center font-bold text-black transition-all hover:bg-zinc-200">
-                Send Message
-                <span className="transition-transform group-hover:translate-x-1">→</span>
+            <button 
+              disabled={isPending}
+              className="group mt-2 flex w-full items-center justify-center gap-2 rounded-lg bg-white px-6 py-4 text-center font-bold text-black transition-all hover:bg-zinc-200 disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+                {isPending ? (
+                  <>
+                    <Loader2 className="h-5 w-5 animate-spin" />
+                    Sending...
+                  </>
+                ) : (
+                  <>
+                    Send Message
+                    <span className="transition-transform group-hover:translate-x-1">→</span>
+                  </>
+                )}
             </button>
           </motion.form>
         </div>

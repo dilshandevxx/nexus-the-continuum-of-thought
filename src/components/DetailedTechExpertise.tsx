@@ -1,33 +1,33 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Monitor, Server, Cloud, Cpu, Shield, Zap, TrendingUp, Code2 } from "lucide-react";
+import { Monitor, Server, Cloud, Cpu, Shield, Zap, TrendingUp, Sparkles, Workflow, Brain } from "lucide-react";
 import { TechExpertise } from "@/components/TechExpertise"; // Reusing the marquee
 
 const DOMAINS = [
   {
+    title: "Generative AI & Automation",
+    icon: Sparkles,
+    description: "Leveraging cutting-edge LLMs and automation workflows to revolutionize business efficiency.",
+    stack: ["OpenAI GPT-4", "LangChain", "Stable Diffusion", "Python", "AutoGPT", "Zapier", "Pinecone"]
+  },
+  {
     title: "Frontend Engineering",
     icon: Monitor,
-    description: "Building immersive, responsive, and performant user interfaces.",
-    stack: ["React", "Next.js", "TypeScript", "Tailwind CSS", "Three.js", "Framer Motion", "Redux"]
+    description: "Building immersive, high-fidelity user interfaces that captivate and convert.",
+    stack: ["React", "Next.js 14", "TypeScript", "Tailwind CSS", "Three.js", "Framer Motion", "Zustand"]
   },
   {
     title: "Backend Systems",
     icon: Server,
-    description: "Robust APIs and microservices that power your business logic.",
-    stack: ["Node.js", "Python", "Go", "PostgreSQL", "MongoDB", "Redis", "GraphQL"]
+    description: "Architecting robust, scalable APIs and microservices for enterprise-grade performance.",
+    stack: ["Node.js", "Python", "Go", "PostgreSQL", "MongoDB", "Redis", "GraphQL", "NestJS"]
   },
   {
     title: "Cloud & DevOps",
     icon: Cloud,
-    description: "Scalable infrastructure with automated CI/CD pipelines.",
-    stack: ["AWS", "Google Cloud", "Docker", "Kubernetes", "Terraform", "Vercel", "GitHub Actions"]
-  },
-  {
-    title: "AI & Data",
-    icon: Cpu,
-    description: "Intelligent solutions driven by machine learning and data analytics.",
-    stack: ["TensorFlow", "PyTorch", "OpenAI API", "LangChain", "Pandas", "Pinecone"]
+    description: "Seamless deployment and orchestration with military-grade security and reliability.",
+    stack: ["AWS", "Google Cloud", "Docker", "Kubernetes", "Terraform", "GitHub Actions", "ArgoCD"]
   }
 ];
 
@@ -73,26 +73,26 @@ export function DetailedTechExpertise() {
       {/* 2. Domains Grid */}
       <section className="relative w-full px-4 text-white md:px-12 lg:px-20">
         <div className="mx-auto max-w-7xl px-8 md:px-12">
-             <div className="grid gap-6 md:grid-cols-2">
+             <div className="grid gap-8 md:grid-cols-2">
                 {DOMAINS.map((domain, i) => (
                     <motion.div 
                         key={i}
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         transition={{ delay: i * 0.1 }}
-                        className="group relative flex flex-col gap-6 rounded-3xl border border-white/10 bg-white/5 p-8 transition-colors hover:bg-white/10"
+                        className="group relative flex flex-col gap-6 rounded-3xl border border-white/10 bg-white/5 p-8 transition-all hover:border-white/20 hover:bg-white/10 hover:shadow-2xl hover:shadow-blue-500/10"
                     >
                         <div className="flex items-center gap-4">
-                            <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-white text-black">
-                                <domain.icon size={24} />
+                            <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-white to-zinc-400 text-black shadow-lg">
+                                <domain.icon size={28} />
                             </div>
                             <h4 className="text-2xl font-bold">{domain.title}</h4>
                         </div>
-                        <p className="text-zinc-400">{domain.description}</p>
+                        <p className="text-lg text-zinc-400 leading-relaxed">{domain.description}</p>
                         
-                        <div className="flex flex-wrap gap-2">
+                        <div className="pt-4 flex flex-wrap gap-2">
                             {domain.stack.map((tech, j) => (
-                                <span key={j} className="rounded-full border border-white/10 bg-black/20 px-3 py-1 text-xs font-medium text-zinc-300">
+                                <span key={j} className="rounded-md border border-white/10 bg-black/40 px-3 py-1.5 text-xs font-semibold text-zinc-300 transition-colors group-hover:bg-white/10 group-hover:text-white">
                                     {tech}
                                 </span>
                             ))}
@@ -113,11 +113,24 @@ export function DetailedTechExpertise() {
             
             <div className="grid gap-8 md:grid-cols-3">
                 {PHILOSOPHY.map((item, i) => (
-                    <div key={i} className="flex flex-col gap-4 rounded-xl p-6">
-                        <item.icon className="mb-4 h-10 w-10 text-white" />
-                        <h4 className="text-xl font-bold">{item.title}</h4>
-                        <p className="text-zinc-400">{item.desc}</p>
-                    </div>
+                    <motion.div 
+                        key={i} 
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        transition={{ delay: i * 0.1 }}
+                        className="group relative flex flex-col gap-6 rounded-3xl border border-white/10 bg-gradient-to-b from-white/[0.08] to-transparent p-8 transition-all duration-300 hover:-translate-y-2 hover:border-amber-500/30 hover:shadow-2xl hover:shadow-amber-500/20"
+                    >
+                        <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-amber-500/5 via-transparent to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+                        
+                        <div className="relative mb-2 flex h-16 w-16 items-center justify-center rounded-2xl bg-amber-500/10 text-amber-500 shadow-inner ring-1 ring-white/10 transition-transform duration-300 group-hover:scale-110 group-hover:bg-amber-500 group-hover:text-black">
+                            <item.icon className="h-8 w-8" />
+                        </div>
+                        
+                        <div className="relative">
+                            <h4 className="mb-3 text-2xl font-bold text-white group-hover:text-amber-400 transition-colors">{item.title}</h4>
+                            <p className="text-lg leading-relaxed text-zinc-400 group-hover:text-zinc-300">{item.desc}</p>
+                        </div>
+                    </motion.div>
                 ))}
             </div>
          </div>
