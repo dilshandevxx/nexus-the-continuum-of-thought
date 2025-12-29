@@ -124,12 +124,12 @@ export function Contact() {
                       {...register("firstName")}
                       type="text" 
                       className={cn(
-                        "rounded-lg border bg-white/5 px-4 py-3 text-white placeholder-zinc-600 transition-all focus:border-white/50 focus:bg-white/10 focus:outline-none",
-                        errors.firstName ? "border-red-500 focus:border-red-500" : "border-white/10"
+                        "rounded-lg border bg-white/5 px-4 py-3 text-white placeholder-zinc-600 transition-all focus:border-white/40 focus:bg-white/10 focus:outline-none focus:ring-1 focus:ring-white/40",
+                        errors.firstName ? "border-red-500/50" : "border-white/10"
                       )}
                       placeholder="John" 
                     />
-                    {errors.firstName && <span className="text-xs text-red-500">{errors.firstName.message}</span>}
+                    {errors.firstName && <span className="text-xs text-red-400">{errors.firstName.message}</span>}
                 </div>
                 <div className="group flex flex-col gap-2">
                     <label className="text-sm font-medium text-zinc-400 transition-colors group-focus-within:text-white">Last Name</label>
@@ -137,12 +137,12 @@ export function Contact() {
                       {...register("lastName")}
                       type="text" 
                       className={cn(
-                        "rounded-lg border bg-white/5 px-4 py-3 text-white placeholder-zinc-600 transition-all focus:border-white/50 focus:bg-white/10 focus:outline-none",
-                        errors.lastName ? "border-red-500 focus:border-red-500" : "border-white/10"
+                        "rounded-lg border bg-white/5 px-4 py-3 text-white placeholder-zinc-600 transition-all focus:border-white/40 focus:bg-white/10 focus:outline-none focus:ring-1 focus:ring-white/40",
+                        errors.lastName ? "border-red-500/50" : "border-white/10"
                       )}
                       placeholder="Doe" 
                     />
-                    {errors.lastName && <span className="text-xs text-red-500">{errors.lastName.message}</span>}
+                    {errors.lastName && <span className="text-xs text-red-400">{errors.lastName.message}</span>}
                 </div>
             </div>
             
@@ -152,12 +152,12 @@ export function Contact() {
                   {...register("email")}
                   type="email" 
                   className={cn(
-                    "rounded-lg border bg-white/5 px-4 py-3 text-white placeholder-zinc-600 transition-all focus:border-white/50 focus:bg-white/10 focus:outline-none",
-                    errors.email ? "border-red-500 focus:border-red-500" : "border-white/10"
+                    "rounded-lg border bg-white/5 px-4 py-3 text-white placeholder-zinc-600 transition-all focus:border-white/40 focus:bg-white/10 focus:outline-none focus:ring-1 focus:ring-white/40",
+                    errors.email ? "border-red-500/50" : "border-white/10"
                   )}
                   placeholder="john@example.com" 
                 />
-                {errors.email && <span className="text-xs text-red-500">{errors.email.message}</span>}
+                {errors.email && <span className="text-xs text-red-400">{errors.email.message}</span>}
             </div>
 
             <div className="group flex flex-col gap-2">
@@ -166,17 +166,17 @@ export function Contact() {
                   {...register("message")}
                   rows={4} 
                   className={cn(
-                    "rounded-lg border bg-white/5 px-4 py-3 text-white placeholder-zinc-600 transition-all focus:border-white/50 focus:bg-white/10 focus:outline-none",
-                    errors.message ? "border-red-500 focus:border-red-500" : "border-white/10"
+                    "rounded-lg border bg-white/5 px-4 py-3 text-white placeholder-zinc-600 transition-all focus:border-white/40 focus:bg-white/10 focus:outline-none focus:ring-1 focus:ring-white/40",
+                    errors.message ? "border-red-500/50" : "border-white/10"
                   )}
                   placeholder="Tell us about your project..." 
                 />
-                {errors.message && <span className="text-xs text-red-500">{errors.message.message}</span>}
+                {errors.message && <span className="text-xs text-red-400">{errors.message.message}</span>}
             </div>
 
             <button 
               disabled={isPending}
-              className="group mt-2 flex w-full items-center justify-center gap-2 rounded-lg bg-[#3b82f6] px-6 py-4 text-center font-bold text-white transition-all hover:bg-[#3b82f6]/90 shadow-[0_0_20px_rgba(59,130,246,0.3)] disabled:opacity-50 disabled:cursor-not-allowed"
+              className="group mt-2 flex w-full items-center justify-center gap-2 rounded-lg bg-white px-6 py-4 text-center font-bold text-black transition-all hover:bg-zinc-200 hover:scale-[1.02] active:scale-[0.98] shadow-[0_0_20px_rgba(255,255,255,0.1)] disabled:opacity-50 disabled:cursor-not-allowed"
             >
                 {isPending ? (
                   <>
