@@ -2,7 +2,7 @@
 
 import { motion, useInView } from "framer-motion";
 import { useEffect, useState, useRef } from "react";
-import { Lightbulb, Target, ShieldCheck, Users, Rocket, Award, Globe, Zap, Cpu, Layers, Code, Brain, Sparkles } from "lucide-react";
+import { Lightbulb, Target, ShieldCheck, Users, Rocket, Award, Globe, Zap, Cpu, Layers, Code, Brain, Sparkles, Triangle } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const STATS = [
@@ -131,63 +131,86 @@ export function About() {
               </motion.div>
             </div>
 
-             {/* Graphic Side - The Infinite Gateway */}
+             {/* Graphic Side - The Digital Prism */}
              <motion.div 
                 initial={{ opacity: 0, scale: 0.8 }}
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
                 transition={{ delay: 0.3, duration: 0.8 }}
-                className="relative hidden h-96 w-96 lg:flex items-center justify-center perspective-[500px]"
+                className="relative hidden h-96 w-96 lg:flex items-center justify-center perspective-[1000px]"
              >
                 <div className="absolute inset-0 -z-10 bg-white/5 blur-[80px] rounded-full" />
                 
-                {/* Gateway Container */}
+                {/* Prism Container */}
                 <div className="relative flex h-full w-full items-center justify-center transform-style-3d">
                     
-                    {/* Tunnel Frames */}
-                    {[...Array(8)].map((_, i) => (
-                        <motion.div
-                            key={i}
-                            className="absolute h-48 w-48 border border-white/20 shadow-[0_0_15px_rgba(255,255,255,0.05)] backdrop-blur-[1px]"
+                    {/* Rotating Pyramid */}
+                    <motion.div
+                        animate={{ rotateX: 360, rotateY: 360, rotateZ: 180 }}
+                        transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
+                        className="relative h-48 w-48 transform-style-3d"
+                    >
+                         {/* Triangle Faces */}
+                         {/* Front */}
+                         <div 
+                            className="absolute bottom-0 left-0 border-l-[100px] border-r-[100px] border-b-[173px] border-l-transparent border-r-transparent border-b-white/10 backdrop-blur-sm"
+                            style={{ transform: "rotateY(0deg) translateZ(58px) rotateX(30deg)", transformOrigin: "50% 100%" }}
+                         >
+                            <div className="absolute top-[50px] left-[-50px] h-20 w-20 bg-gradient-to-t from-white/20 to-transparent blur-md" />
+                         </div>
+                         
+                         {/* Back Right */}
+                         <div 
+                            className="absolute bottom-0 left-0 border-l-[100px] border-r-[100px] border-b-[173px] border-l-transparent border-r-transparent border-b-white/5 backdrop-blur-sm"
+                            style={{ transform: "rotateY(120deg) translateZ(58px) rotateX(30deg)", transformOrigin: "50% 100%" }}
+                         />
+
+                         {/* Back Left */}
+                         <div 
+                            className="absolute bottom-0 left-0 border-l-[100px] border-r-[100px] border-b-[173px] border-l-transparent border-r-transparent border-b-white/10 backdrop-blur-sm"
+                            style={{ transform: "rotateY(240deg) translateZ(58px) rotateX(30deg)", transformOrigin: "50% 100%" }}
+                         >
+                             {/* Internal Spark */}
+                             <div className="absolute top-[80px] left-[0px] h-2 w-2 rounded-full bg-white shadow-[0_0_20px_white] animate-ping" />
+                         </div>
+
+                         {/* Base */}
+                         <div 
+                            className="absolute bottom-0 left-0 h-[173px] w-[200px] bg-white/5 backdrop-blur-sm"
                             style={{ 
-                                borderRadius: '2rem',
+                                clipPath: "polygon(50% 0%, 0% 100%, 100% 100%)",
+                                transform: "rotateX(90deg) translateZ(-115px)" 
                             }}
-                            initial={{ z: -500, opacity: 0, rotate: 0 }}
-                            animate={{ 
-                                z: [ -500, 200 ], 
-                                opacity: [0, 1, 0],
-                                rotate: [0, 45]
-                            }}
-                            transition={{ 
-                                duration: 8, 
-                                repeat: Infinity, 
-                                ease: "linear",
-                                delay: i * 1 // Stagger the frames
-                            }}
-                        />
-                    ))}
+                         />
+                    </motion.div>
 
-                    {/* Central Light / Exit */}
-                    <div className="absolute z-[-1] h-1 w-1 rounded-full bg-white shadow-[0_0_100px_rgba(255,255,255,0.8)]" />
-
-                    {/* Side Glitch Elements */}
-                    <motion.div 
-                         className="absolute h-64 w-64 border border-dashed border-white/10 rounded-full"
-                         animate={{ rotate: 360, scale: [1, 1.05, 1] }}
-                         transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+                    {/* Orbiting Particles */}
+                    <motion.div
+                        animate={{ rotate: 360 }}
+                        transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
+                        className="absolute h-64 w-64 rounded-full border border-dashed border-white/10"
+                        style={{ transform: "rotateX(70deg)" }}
                     />
+                     <motion.div
+                        animate={{ rotate: -360 }}
+                        transition={{ duration: 12, repeat: Infinity, ease: "linear" }}
+                        className="absolute h-80 w-80 rounded-full border border-white/5"
+                        style={{ transform: "rotateX(70deg)" }}
+                    >
+                         <div className="absolute top-0 left-1/2 h-2 w-2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-white" />
+                    </motion.div>
 
                 </div>
 
-                {/* Floating "Vision" Card */}
+                {/* Floating "Stability" Card */}
                 <motion.div 
                     animate={{ y: [0, -15, 0] }}
                     transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
                     className="absolute top-10 right-0 z-20 rounded-xl border border-white/10 bg-black/40 p-3 backdrop-blur-md"
                 >
                     <div className="flex items-center gap-2">
-                        <Target size={14} className="text-white" />
-                        <span className="text-xs font-medium text-white">Visionary</span>
+                        <Triangle size={14} className="text-white" />
+                        <span className="text-xs font-medium text-white">Peak Performance</span>
                     </div>
                 </motion.div>
 
@@ -197,8 +220,8 @@ export function About() {
                     className="absolute bottom-10 left-0 z-20 rounded-xl border border-white/10 bg-black/40 p-3 backdrop-blur-md"
                 >
                     <div className="flex items-center gap-2">
-                        <Rocket size={14} className="text-white" />
-                        <span className="text-xs font-medium text-white">Momentum</span>
+                        <Zap size={14} className="text-white" />
+                        <span className="text-xs font-medium text-white">High Energy</span>
                     </div>
                 </motion.div>
 
