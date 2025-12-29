@@ -2,7 +2,7 @@
 
 import { motion, useInView } from "framer-motion";
 import { useEffect, useState, useRef } from "react";
-import { Lightbulb, Target, ShieldCheck, Users, Rocket, Award, Globe, Zap, Cpu } from "lucide-react";
+import { Lightbulb, Target, ShieldCheck, Users, Rocket, Award, Globe, Zap, Cpu, Layers, Code } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const STATS = [
@@ -78,7 +78,7 @@ export function About() {
 
       <div className="mx-auto flex max-w-7xl flex-col gap-32 px-6 md:px-12">
         
-        {/* 1. Hero / Story - Golden Innovation Design */}
+        {/* 1. Hero / Story - Visionary Blue Design */}
         <div className="flex flex-col items-start gap-12 lg:flex-row lg:justify-between lg:items-center">
             {/* Text Side */}
             <div className="max-w-2xl">
@@ -88,8 +88,8 @@ export function About() {
                 viewport={{ once: true }}
                 className="mb-8 flex items-center gap-3"
               >
-                  <div className="h-px w-12 bg-amber-500" />
-                  <span className="text-sm font-bold uppercase tracking-[0.2em] text-amber-500">Who We Are</span>
+                  <div className="h-px w-12 bg-white" />
+                  <span className="text-sm font-bold uppercase tracking-[0.2em] text-white">Who We Are</span>
               </motion.div>
               
               <motion.h2 
@@ -112,41 +112,74 @@ export function About() {
                 transition={{ delay: 0.2 }}
                 className="mt-8 text-lg text-zinc-400 leading-relaxed font-light md:text-xl"
               >
-                At <span className="font-semibold text-white">NEXUS</span>, we believe that technology should be a limitless enabler. For over a decade, we have partnered with visionaries to engineer software that not only solves today's problems but anticipates tomorrow's opportunities.
+                At <span className="font-bold text-white">NEXUS</span>, we believe that technology should be a limitless enabler. For over a decade, we have partnered with visionaries to engineer software that not only solves today's problems but anticipates tomorrow's opportunities.
               </motion.p>
+              
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.3 }}
+                className="mt-8 flex gap-4"
+              >
+                  <div className="flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-4 py-1.5 text-xs text-zinc-300">
+                      <Globe size={14} /> Global Reach
+                  </div>
+                  <div className="flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-4 py-1.5 text-xs text-zinc-300">
+                      <Zap size={14} /> High Velocity
+                  </div>
+              </motion.div>
             </div>
 
-             {/* Graphic Side - Golden Processor Core */}
+             {/* Graphic Side - DNA Interaction */}
              <motion.div 
                 initial={{ opacity: 0, scale: 0.8 }}
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
                 transition={{ delay: 0.3, duration: 0.8 }}
-                className="relative hidden lg:block"
+                className="relative hidden h-96 w-96 lg:flex items-center justify-center"
              >
-                <div className="absolute inset-0 -z-10 bg-amber-500/10 blur-[80px] rounded-full" />
+                <div className="absolute inset-0 -z-10 bg-white/5 blur-[100px] rounded-full" />
                 
-                <div className="relative flex h-80 w-80 items-center justify-center rounded-full border border-amber-500/20 bg-amber-500/5 backdrop-blur-sm">
-                    {/* Inner Rotating Core */}
-                    <motion.div
-                        animate={{ rotate: 360 }}
-                        transition={{ duration: 40, repeat: Infinity, ease: "linear" }}
-                        className="absolute flex items-center justify-center"
-                    >
-                         <Cpu className="h-48 w-48 text-amber-500/80" strokeWidth={0.5} />
-                    </motion.div>
+                {/* DNA Helix Container */}
+                <div className="relative flex h-full w-full items-center justify-center">
+                    {[...Array(20)].map((_, i) => (
+                        <motion.div
+                            key={i}
+                            className="absolute flex items-center gap-12"
+                            animate={{ rotate: 360 }}
+                            transition={{ 
+                                duration: 10, 
+                                repeat: Infinity, 
+                                ease: "linear", 
+                                delay: -i * 0.5 
+                            }}
+                        >
+                             {/* Strand 1 */}
+                            <motion.div 
+                                className="h-2 w-2 rounded-full bg-white shadow-[0_0_10px_rgba(255,255,255,0.8)]"
+                                animate={{ scale: [1, 1.5, 1], opacity: [0.5, 1, 0.5] }}
+                                transition={{ duration: 2, repeat: Infinity }}
+                            />
+                            
+                            {/* Connection Line (faint) */}
+                            <div className="h-[1px] w-12 bg-white/10" />
 
-                    {/* Static Grid Effect Overlay */}
-                    <div className="absolute inset-0 rounded-full bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20" />
-                    
-                    {/* Orbiting Tech Node */}
+                            {/* Strand 2 */}
+                            <motion.div 
+                                className="h-2 w-2 rounded-full bg-zinc-400 shadow-[0_0_10px_rgba(255,255,255,0.3)]"
+                                animate={{ scale: [1, 1.5, 1], opacity: [0.5, 1, 0.5] }}
+                                transition={{ duration: 2, repeat: Infinity, delay: 1 }}
+                            />
+                        </motion.div>
+                    ))}
+
+                    {/* Central Glow */}
                     <motion.div 
-                        animate={{ rotate: -360 }}
-                        transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
-                        className="absolute h-full w-full rounded-full"
-                    >
-                        <div className="absolute left-1/2 top-0 h-3 w-3 -translate-x-1/2 -translate-y-1/2 rounded-full bg-amber-400 shadow-[0_0_10px_rgba(245,158,11,0.8)]" />
-                    </motion.div>
+                        animate={{ opacity: [0.3, 0.6, 0.3] }}
+                        transition={{ duration: 4, repeat: Infinity }}
+                        className="absolute h-32 w-32 rounded-full bg-white/5 blur-2xl"
+                    />
                 </div>
              </motion.div>
         </div>
@@ -186,11 +219,11 @@ export function About() {
                         <div className="mb-6 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-white/10 to-white/5 text-white shadow-inner">
                             <val.icon className="h-6 w-6" />
                         </div>
-                        <h4 className="mb-3 text-2xl font-bold text-white group-hover:text-blue-200 transition-colors">{val.title}</h4>
+                        <h4 className="mb-3 text-2xl font-bold text-white group-hover:text-white transition-colors">{val.title}</h4>
                         <p className="text-zinc-400 group-hover:text-zinc-300 transition-colors">{val.description}</p>
                         
                         {/* Decorative glow */}
-                        <div className="absolute -right-10 -bottom-10 h-32 w-32 bg-white/5 blur-3xl group-hover:bg-blue-500/10 transition-colors" />
+                        <div className="absolute -right-10 -bottom-10 h-32 w-32 bg-white/5 blur-3xl group-hover:bg-white/10 transition-colors" />
                     </motion.div>
                 ))}
             </div>

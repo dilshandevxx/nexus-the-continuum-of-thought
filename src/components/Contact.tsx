@@ -176,7 +176,7 @@ export function Contact() {
 
             <button 
               disabled={isPending}
-              className="group mt-2 flex w-full items-center justify-center gap-2 rounded-lg bg-white px-6 py-4 text-center font-bold text-black transition-all hover:bg-zinc-200 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="group mt-2 flex w-full items-center justify-center gap-2 rounded-lg bg-[#3b82f6] px-6 py-4 text-center font-bold text-white transition-all hover:bg-[#3b82f6]/90 shadow-[0_0_20px_rgba(59,130,246,0.3)] disabled:opacity-50 disabled:cursor-not-allowed"
             >
                 {isPending ? (
                   <>
