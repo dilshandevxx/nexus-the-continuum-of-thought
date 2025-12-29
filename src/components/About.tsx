@@ -2,7 +2,7 @@
 
 import { motion, useInView } from "framer-motion";
 import { useEffect, useState, useRef } from "react";
-import { Lightbulb, Target, ShieldCheck, Users, Rocket, Award, Globe, Zap, Cpu, Layers, Code } from "lucide-react";
+import { Lightbulb, Target, ShieldCheck, Users, Rocket, Award, Globe, Zap, Cpu, Layers, Code, Brain, Sparkles } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const STATS = [
@@ -131,65 +131,85 @@ export function About() {
               </motion.div>
             </div>
 
-             {/* Graphic Side - Quantum Tesseract */}
+             {/* Graphic Side - Neural Synapse */}
              <motion.div 
                 initial={{ opacity: 0, scale: 0.8 }}
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
                 transition={{ delay: 0.3, duration: 0.8 }}
-                className="relative hidden h-96 w-96 lg:flex items-center justify-center perspective-[1000px]"
+                className="relative hidden h-96 w-96 lg:flex items-center justify-center"
              >
                 <div className="absolute inset-0 -z-10 bg-white/5 blur-[80px] rounded-full" />
                 
-                {/* Hypercube Container */}
-                <div className="relative flex h-full w-full items-center justify-center transform-style-3d">
+                {/* Synapse Container */}
+                <div className="relative flex h-full w-full items-center justify-center">
                     
-                    {/* Outer Cube */}
-                    <motion.div
-                        animate={{ rotateX: 360, rotateY: 360 }}
-                        transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-                        className="absolute h-64 w-64 border border-white/20 shadow-[0_0_20px_rgba(255,255,255,0.05)]"
-                        style={{ transformStyle: "preserve-3d" }}
-                    >
-                         {/* Cube Faces or Vertices hint - kept minimal for elegance */}
-                         <div className="absolute inset-0 border border-white/10" style={{ transform: "translateZ(30px)" }} />
-                         <div className="absolute inset-0 border border-white/10" style={{ transform: "translateZ(-30px)" }} />
-                    </motion.div>
+                    {/* Central Core (The "Idea") */}
+                    <div className="relative z-10 flex h-20 w-20 items-center justify-center rounded-full bg-white shadow-[0_0_50px_rgba(255,255,255,0.3)]">
+                         <div className="absolute inset-0 animate-ping rounded-full bg-white/20" />
+                         <Brain className="h-8 w-8 text-black" />
+                    </div>
 
-                    {/* Inner Cube */}
-                    <motion.div
-                        animate={{ rotateX: 360, rotateY: -360 }}
-                        transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
-                        className="absolute h-32 w-32 border-2 border-white/40 bg-white/5 backdrop-blur-sm"
-                        style={{ transformStyle: "preserve-3d" }}
-                    >
-                         {/* Inner Glow */}
-                         <div className="absolute inset-0 bg-white/10 blur-xl" />
-                    </motion.div>
+                    {/* Radiating Connections */}
+                    {[...Array(8)].map((_, i) => (
+                        <motion.div
+                            key={i}
+                            className="absolute h-full w-2"
+                            style={{ rotate: `${i * 45}deg` }}
+                        >
+                            <motion.div
+                                animate={{ height: ["0%", "45%", "0%"], opacity: [0, 1, 0] }}
+                                transition={{ 
+                                    duration: 3, 
+                                    repeat: Infinity, 
+                                    delay: i * 0.2,
+                                    ease: "easeInOut"
+                                }}
+                                className="mx-auto mt-[50%] w-[1px] bg-gradient-to-t from-transparent via-white/50 to-transparent"
+                            />
+                            
+                            {/* Orbiting Node at end of path */}
+                            <motion.div
+                                animate={{ y: [0, -140, 0], opacity: [0, 1, 0] }}
+                                transition={{ 
+                                    duration: 3, 
+                                    repeat: Infinity, 
+                                    delay: i * 0.2,
+                                    ease: "easeInOut"
+                                }}
+                                className="absolute top-1/2 left-1/2 h-2 w-2 -translate-x-1/2 rounded-full bg-white"
+                            />
+                        </motion.div>
+                    ))}
 
-                    {/* Connecting Lines (Simulated Hypercube Concept) */}
+                    {/* Orbiting Satellite Rings */}
                     <motion.div
-                         animate={{ rotate: 360 }}
-                         transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
-                         className="absolute inset-0 flex items-center justify-center"
+                        animate={{ rotate: 360 }}
+                        transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
+                        className="absolute h-64 w-64 rounded-full border border-dashed border-white/10"
+                    />
+                    <motion.div
+                        animate={{ rotate: -360 }}
+                        transition={{ duration: 35, repeat: Infinity, ease: "linear" }}
+                        className="absolute h-80 w-80 rounded-full border border-white/5"
                     >
-                        <div className="h-80 w-[1px] bg-gradient-to-b from-transparent via-white/20 to-transparent rotate-45" />
-                        <div className="h-80 w-[1px] bg-gradient-to-b from-transparent via-white/20 to-transparent -rotate-45" />
+                         <div className="absolute top-0 left-1/2 h-2 w-2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-zinc-400" />
                     </motion.div>
 
                 </div>
 
-                {/* Floating "Dimension" Card */}
+                {/* Floating "Intelligence" Card */}
                 <motion.div 
-                    animate={{ y: [0, 15, 0] }}
-                    transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-                    className="absolute top-10 left-0 z-20 rounded-xl border border-white/10 bg-black/40 p-3 backdrop-blur-md"
+                    animate={{ y: [0, -10, 0] }}
+                    transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                    className="absolute bottom-10 right-0 z-20 rounded-xl border border-white/10 bg-black/40 p-3 backdrop-blur-md"
                 >
                     <div className="flex items-center gap-2">
-                        <Cpu size={14} className="text-white" />
-                        <span className="text-xs font-medium text-white">Multi-Dimensional</span>
+                        <Sparkles size={14} className="text-white" />
+                        <span className="text-xs font-medium text-white">Artificial Intelligence</span>
                     </div>
                 </motion.div>
+
              </motion.div>
         </div>
 
