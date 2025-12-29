@@ -49,8 +49,13 @@ const PHILOSOPHY = [
   }
 ];
 
+import { RippleBackground } from "@/components/ui/RippleBackground";
+
+// ... existing imports
+
 export function DetailedTechExpertise() {
   return (
+    <RippleBackground className="w-full min-h-screen text-white">
     <div className="flex flex-col gap-32 pb-32">
       
       {/* 1. Hero / Intro */}
@@ -66,7 +71,7 @@ export function DetailedTechExpertise() {
          </div>
          {/* Reuse the marquee for visual impact */}
          <div className="mt-16">
-            <TechExpertise />
+            <TechExpertise disableRipple={true} />
          </div>
       </section>
 
@@ -137,5 +142,6 @@ export function DetailedTechExpertise() {
       </section>
 
     </div>
+    </RippleBackground>
   );
 }
