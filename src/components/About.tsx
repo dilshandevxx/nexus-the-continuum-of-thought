@@ -131,7 +131,7 @@ export function About() {
               </motion.div>
             </div>
 
-             {/* Graphic Side - DNA Interaction */}
+             {/* Graphic Side - Precision Gyroscope */}
              <motion.div 
                 initial={{ opacity: 0, scale: 0.8 }}
                 whileInView={{ opacity: 1, scale: 1 }}
@@ -139,47 +139,47 @@ export function About() {
                 transition={{ delay: 0.3, duration: 0.8 }}
                 className="relative hidden h-96 w-96 lg:flex items-center justify-center"
              >
-                <div className="absolute inset-0 -z-10 bg-white/5 blur-[100px] rounded-full" />
+                <div className="absolute inset-0 -z-10 bg-white/5 blur-[80px] rounded-full" />
                 
-                {/* DNA Helix Container */}
-                <div className="relative flex h-full w-full items-center justify-center">
-                    {[...Array(20)].map((_, i) => (
-                        <motion.div
-                            key={i}
-                            className="absolute flex items-center gap-12"
-                            animate={{ rotate: 360 }}
-                            transition={{ 
-                                duration: 10, 
-                                repeat: Infinity, 
-                                ease: "linear", 
-                                delay: -i * 0.5 
-                            }}
-                        >
-                             {/* Strand 1 */}
-                            <motion.div 
-                                className="h-2 w-2 rounded-full bg-white shadow-[0_0_10px_rgba(255,255,255,0.8)]"
-                                animate={{ scale: [1, 1.5, 1], opacity: [0.5, 1, 0.5] }}
-                                transition={{ duration: 2, repeat: Infinity }}
-                            />
-                            
-                            {/* Connection Line (faint) */}
-                            <div className="h-[1px] w-12 bg-white/10" />
-
-                            {/* Strand 2 */}
-                            <motion.div 
-                                className="h-2 w-2 rounded-full bg-zinc-400 shadow-[0_0_10px_rgba(255,255,255,0.3)]"
-                                animate={{ scale: [1, 1.5, 1], opacity: [0.5, 1, 0.5] }}
-                                transition={{ duration: 2, repeat: Infinity, delay: 1 }}
-                            />
-                        </motion.div>
-                    ))}
-
-                    {/* Central Glow */}
-                    <motion.div 
-                        animate={{ opacity: [0.3, 0.6, 0.3] }}
-                        transition={{ duration: 4, repeat: Infinity }}
-                        className="absolute h-32 w-32 rounded-full bg-white/5 blur-2xl"
+                {/* Gyroscope Container */}
+                <div className="relative flex h-full w-full items-center justify-center perspective-[1000px]">
+                    
+                    {/* Outer Ring */}
+                    <motion.div
+                        animate={{ rotateX: 360, rotateY: 360, rotateZ: 360 }}
+                        transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+                        className="absolute h-80 w-80 rounded-full border border-white/20 shadow-[0_0_30px_rgba(255,255,255,0.05)]"
+                        style={{ transformStyle: "preserve-3d" }}
                     />
+
+                    {/* Middle Ring */}
+                    <motion.div
+                        animate={{ rotateX: 360, rotateY: -360, rotateZ: 180 }}
+                        transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
+                        className="absolute h-64 w-64 rounded-full border border-dashed border-white/30"
+                        style={{ transformStyle: "preserve-3d" }}
+                    />
+                    
+                     {/* Inner Ring */}
+                    <motion.div
+                        animate={{ rotateX: -360, rotateY: 360, rotateZ: -90 }}
+                        transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
+                        className="absolute h-48 w-48 rounded-full border-2 border-white/10"
+                        style={{ transformStyle: "preserve-3d" }}
+                    >
+                         <div className="absolute top-0 left-1/2 h-3 w-3 -translate-x-1/2 -translate-y-1/2 rounded-full bg-white shadow-[0_0_15px_white]" />
+                    </motion.div>
+
+                    {/* Central Core */}
+                    <motion.div 
+                        animate={{ scale: [1, 1.1, 1] }}
+                        transition={{ duration: 2, repeat: Infinity }}
+                        className="relative z-10 flex h-24 w-24 items-center justify-center rounded-full bg-white/5 backdrop-blur-sm border border-white/10"
+                    >
+                        <div className="absolute inset-0 rounded-full bg-white/10 animate-pulse" />
+                        <Target className="h-10 w-10 text-white" strokeWidth={1} />
+                    </motion.div>
+
                 </div>
              </motion.div>
         </div>
