@@ -131,7 +131,7 @@ export function About() {
               </motion.div>
             </div>
 
-             {/* Graphic Side - Global Nexus */}
+             {/* Graphic Side - Quantum Tesseract */}
              <motion.div 
                 initial={{ opacity: 0, scale: 0.8 }}
                 whileInView={{ opacity: 1, scale: 1 }}
@@ -141,61 +141,55 @@ export function About() {
              >
                 <div className="absolute inset-0 -z-10 bg-white/5 blur-[80px] rounded-full" />
                 
-                {/* Globe Container */}
-                <div className="relative h-64 w-64 transform-style-3d">
+                {/* Hypercube Container */}
+                <div className="relative flex h-full w-full items-center justify-center transform-style-3d">
+                    
+                    {/* Outer Cube */}
                     <motion.div
-                        animate={{ rotateY: 360 }}
+                        animate={{ rotateX: 360, rotateY: 360 }}
                         transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-                        className="absolute inset-0 transform-style-3d"
+                        className="absolute h-64 w-64 border border-white/20 shadow-[0_0_20px_rgba(255,255,255,0.05)]"
+                        style={{ transformStyle: "preserve-3d" }}
                     >
-                         {/* Globe Dots */}
-                         {[...Array(40)].map((_, i) => {
-                             // Golden Angle distribution for even sphere coverage
-                             const phi = Math.acos(-1 + (2 * i) / 40);
-                             const theta = Math.sqrt(40 * Math.PI) * phi;
-                             
-                             const x = 120 * Math.cos(theta) * Math.sin(phi);
-                             const y = 120 * Math.sin(theta) * Math.sin(phi);
-                             const z = 120 * Math.cos(phi);
-
-                             return (
-                                 <motion.div
-                                     key={i}
-                                     className="absolute h-1.5 w-1.5 rounded-full bg-white shadow-[0_0_5px_white]"
-                                     style={{
-                                         transform: `translate3d(${x}px, ${y}px, ${z}px)`,
-                                     }}
-                                     // Fade dots when they rotate to the back
-                                     animate={{ opacity: [0.2, 1, 0.2] }}
-                                     transition={{ 
-                                         duration: 20, 
-                                         repeat: Infinity, 
-                                         ease: "linear",
-                                         delay: -10 + (Math.atan2(x, z) / (2 * Math.PI)) * 20 // Phase based on rotation
-                                     }}
-                                 />
-                             );
-                         })}
-                         
-                         {/* Equator / Orbital Ring */}
-                         <div className="absolute top-1/2 left-1/2 h-80 w-80 -translate-x-1/2 -translate-y-1/2 rounded-full border border-white/10" style={{ transform: "rotateX(90deg)" }} />
-                         <div className="absolute top-1/2 left-1/2 h-80 w-80 -translate-x-1/2 -translate-y-1/2 rounded-full border border-dashed border-white/20" style={{ transform: "rotateX(90deg) rotateY(45deg)" }} />
-
+                         {/* Cube Faces or Vertices hint - kept minimal for elegance */}
+                         <div className="absolute inset-0 border border-white/10" style={{ transform: "translateZ(30px)" }} />
+                         <div className="absolute inset-0 border border-white/10" style={{ transform: "translateZ(-30px)" }} />
                     </motion.div>
+
+                    {/* Inner Cube */}
+                    <motion.div
+                        animate={{ rotateX: 360, rotateY: -360 }}
+                        transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
+                        className="absolute h-32 w-32 border-2 border-white/40 bg-white/5 backdrop-blur-sm"
+                        style={{ transformStyle: "preserve-3d" }}
+                    >
+                         {/* Inner Glow */}
+                         <div className="absolute inset-0 bg-white/10 blur-xl" />
+                    </motion.div>
+
+                    {/* Connecting Lines (Simulated Hypercube Concept) */}
+                    <motion.div
+                         animate={{ rotate: 360 }}
+                         transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
+                         className="absolute inset-0 flex items-center justify-center"
+                    >
+                        <div className="h-80 w-[1px] bg-gradient-to-b from-transparent via-white/20 to-transparent rotate-45" />
+                        <div className="h-80 w-[1px] bg-gradient-to-b from-transparent via-white/20 to-transparent -rotate-45" />
+                    </motion.div>
+
                 </div>
 
-                {/* Floating "Reach" Card */}
+                {/* Floating "Dimension" Card */}
                 <motion.div 
-                    animate={{ y: [0, -10, 0] }}
-                    transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-                    className="absolute bottom-4 right-0 z-20 rounded-xl border border-white/10 bg-black/40 p-3 backdrop-blur-md"
+                    animate={{ y: [0, 15, 0] }}
+                    transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+                    className="absolute top-10 left-0 z-20 rounded-xl border border-white/10 bg-black/40 p-3 backdrop-blur-md"
                 >
                     <div className="flex items-center gap-2">
-                        <Globe size={14} className="text-white" />
-                        <span className="text-xs font-medium text-white">Borderless</span>
+                        <Cpu size={14} className="text-white" />
+                        <span className="text-xs font-medium text-white">Multi-Dimensional</span>
                     </div>
                 </motion.div>
-
              </motion.div>
         </div>
 
