@@ -131,7 +131,7 @@ export function About() {
               </motion.div>
             </div>
 
-             {/* Graphic Side - Neural Synapse (Selected Option 1) */}
+             {/* Graphic Side - Neural Synapse (Cyber Color) */}
              <motion.div 
                 initial={{ opacity: 0, scale: 0.8 }}
                 whileInView={{ opacity: 1, scale: 1 }}
@@ -139,15 +139,16 @@ export function About() {
                 transition={{ delay: 0.3, duration: 0.8 }}
                 className="relative hidden h-96 w-96 lg:flex items-center justify-center"
              >
-                <div className="absolute inset-0 -z-10 bg-white/5 blur-[80px] rounded-full" />
+                {/* Tech Glow Background */}
+                <div className="absolute inset-0 -z-10 bg-cyan-500/10 blur-[80px] rounded-full" />
                 
                 {/* Synapse Container */}
                 <div className="relative flex h-full w-full items-center justify-center">
                     
                     {/* Central Core (The "Idea") */}
-                    <div className="relative z-10 flex h-20 w-20 items-center justify-center rounded-full bg-white shadow-[0_0_50px_rgba(255,255,255,0.3)]">
-                         <div className="absolute inset-0 animate-ping rounded-full bg-white/20" />
-                         <Brain className="h-8 w-8 text-black" />
+                    <div className="relative z-10 flex h-20 w-20 items-center justify-center rounded-full bg-[#0c121e] border border-cyan-500/30 shadow-[0_0_30px_rgba(6,182,212,0.2)]">
+                         <div className="absolute inset-0 animate-ping rounded-full bg-cyan-500/20" />
+                         <Brain className="h-8 w-8 text-cyan-400 drop-shadow-[0_0_8px_rgba(6,182,212,0.8)]" />
                     </div>
 
                     {/* Radiating Connections */}
@@ -165,7 +166,7 @@ export function About() {
                                     delay: i * 0.2,
                                     ease: "easeInOut"
                                 }}
-                                className="mx-auto mt-[50%] w-[1px] bg-gradient-to-t from-transparent via-white/50 to-transparent"
+                                className="mx-auto mt-[50%] w-[1px] bg-gradient-to-t from-transparent via-cyan-400 to-transparent shadow-[0_0_10px_cyan]"
                             />
                             
                             {/* Orbiting Node at end of path */}
@@ -177,7 +178,7 @@ export function About() {
                                     delay: i * 0.2,
                                     ease: "easeInOut"
                                 }}
-                                className="absolute top-1/2 left-1/2 h-2 w-2 -translate-x-1/2 rounded-full bg-white"
+                                className="absolute top-1/2 left-1/2 h-2 w-2 -translate-x-1/2 rounded-full bg-cyan-300 shadow-[0_0_10px_cyan]"
                             />
                         </motion.div>
                     ))}
@@ -186,14 +187,14 @@ export function About() {
                     <motion.div
                         animate={{ rotate: 360 }}
                         transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
-                        className="absolute h-64 w-64 rounded-full border border-dashed border-white/10"
+                        className="absolute h-64 w-64 rounded-full border border-dashed border-cyan-500/20"
                     />
                     <motion.div
                         animate={{ rotate: -360 }}
                         transition={{ duration: 35, repeat: Infinity, ease: "linear" }}
                         className="absolute h-80 w-80 rounded-full border border-white/5"
                     >
-                         <div className="absolute top-0 left-1/2 h-2 w-2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-zinc-400" />
+                         <div className="absolute top-0 left-1/2 h-2 w-2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-blue-400 shadow-[0_0_10px_blue]" />
                     </motion.div>
 
                 </div>
@@ -202,11 +203,11 @@ export function About() {
                 <motion.div 
                     animate={{ y: [0, -10, 0] }}
                     transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-                    className="absolute bottom-10 right-0 z-20 rounded-xl border border-white/10 bg-black/40 p-3 backdrop-blur-md"
+                    className="absolute bottom-10 right-0 z-20 rounded-xl border border-white/10 bg-black/40 p-3 backdrop-blur-md shadow-[0_0_20px_rgba(6,182,212,0.1)]"
                 >
                     <div className="flex items-center gap-2">
-                        <Sparkles size={14} className="text-white" />
-                        <span className="text-xs font-medium text-white">Artificial Intelligence</span>
+                        <Sparkles size={14} className="text-cyan-400" />
+                        <span className="text-xs font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500">Artificial Intelligence</span>
                     </div>
                 </motion.div>
 
