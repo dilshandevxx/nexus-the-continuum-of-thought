@@ -15,7 +15,6 @@ export function Logo({ className }: { className?: string }) {
           stroke="currentColor"
           strokeWidth="8"
           strokeLinejoin="round"
-          className="text-white"
         />
         
         {/* Inner Connections (N shape abstraction) */}
@@ -25,11 +24,10 @@ export function Logo({ className }: { className?: string }) {
           strokeWidth="8"
           strokeLinecap="round"
           strokeLinejoin="round"
-          className="text-white"
         />
         
         {/* Accent Dot */}
-        <circle cx="50" cy="50" r="6" fill="currentColor" className="text-white" />
+        <circle cx="50" cy="50" r="6" fill="currentColor" />
       </svg>
     </div>
   );
