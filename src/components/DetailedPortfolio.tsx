@@ -2,8 +2,9 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Quote, ArrowRight, ArrowUpRight, Code, Cpu, Layout, Bot, Layers, CheckCircle } from "lucide-react";
+import { Quote, ArrowRight, ArrowUpRight } from "lucide-react";
 import Link from "next/link";
+import { ALL_PROJECTS } from "@/lib/portfolio-data";
 
 // --- DATA ---
 const CATEGORIES = [
@@ -19,65 +20,6 @@ const METRICS = [
     { label: "Client Valuation Generated", value: "$500M+" },
     { label: "Successful Launches", value: "100+" },
     { label: "User Interaction", value: "10M+" },
-];
-
-const ALL_PROJECTS = [
-  {
-    category: "Web Development",
-    title: "FinEdge Banking Core",
-    description: "A secure, microservices-based banking ledger system handling 1M+ transactions daily.",
-    gradient: "from-blue-600/20 to-purple-600/20",
-    icon: Code,
-  },
-  {
-    category: "AI Automation",
-    title: "SupportBot 3000",
-    description: "Automated customer support agent reducing ticket volume by 65%.",
-    gradient: "from-emerald-600/20 to-teal-600/20",
-    icon: Bot,
-  },
-  {
-    category: "Landing Page",
-    title: "LuxeRetail Launch",
-    description: "High-conversion landing page for a luxury fashion brand's seasonal drop.",
-    gradient: "from-orange-600/20 to-red-600/20",
-    icon: Layout,
-  },
-  {
-    category: "Agentic AI",
-    title: "MarketAnalyst Agent",
-    description: "Autonomous AI agent that scrapes, analyzes, and reports on competitor pricing strategies.",
-    gradient: "from-indigo-600/20 to-violet-600/20",
-    icon: Cpu,
-  },
-  {
-    category: "System Design",
-    title: "Global Logistics Grid",
-    description: "Distributed system architecture for real-time fleet tracking across 4 continents.",
-    gradient: "from-zinc-600/20 to-zinc-800/20",
-    icon: Layers,
-  },
-   {
-    category: "Web Development",
-    title: "HealthVerify Portal",
-    description: "HIPAA-compliant patient portal for secure medical record access.",
-    gradient: "from-cyan-600/20 to-blue-600/20",
-    icon: Code,
-  },
-   {
-    category: "Agentic AI",
-    title: "CodeRefactor Auto",
-    description: "AI agent that autonomously scans codebases and proposes optimization PRs.",
-    gradient: "from-fuchsia-600/20 to-pink-600/20",
-    icon: Cpu,
-  },
-  {
-    category: "Landing Page",
-    title: "NeonEnergy Fest",
-    description: "Event landing page with WebGL interactive background and ticket booking.",
-    gradient: "from-yellow-600/20 to-orange-600/20",
-    icon: Layout,
-  },
 ];
 
 const TESTIMONIALS = [
@@ -189,10 +131,12 @@ export function DetailedPortfolio() {
                                 </span>
                                 <h4 className="mb-3 text-2xl font-bold">{project.title}</h4>
                                 <p className="mb-8 flex-1 text-sm text-zinc-400">
-                                    {project.description}
+                                    {project.shortDescription}
                                 </p>
                                 <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-white opacity-60 transition-opacity group-hover:opacity-100">
-                                    View Details <ArrowRight className="h-3 w-3" />
+                                    <Link href={`/portfolio/${project.id}`} className="flex items-center gap-2">
+                                        View Details <ArrowRight className="h-3 w-3" />
+                                    </Link>
                                 </div>
                             </div>
                         </motion.div>

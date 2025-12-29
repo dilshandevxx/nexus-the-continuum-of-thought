@@ -5,40 +5,21 @@ import { ArrowUpRight } from "lucide-react";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 
-const PROJECTS = [
-  {
-    category: "FinTech",
-    title: "Global Banking Platform",
-    description: "A secure, high-performance dashboard for next-gen financial institutions.",
-    gradient: "from-blue-500/20 to-purple-500/20",
-    hoverGradient: "group-hover:from-blue-500/40 group-hover:to-purple-500/40",
-    size: "large", // spans 2 cols on lg
-  },
-  {
-    category: "E-Commerce",
-    title: "Luxury Retail Suite",
-    description: "Immersive shopping experience for high-end fashion brands.",
-    gradient: "from-amber-500/20 to-orange-500/20",
-    hoverGradient: "group-hover:from-amber-500/40 group-hover:to-orange-500/40",
-    size: "small", // spans 1 col on lg
-  },
-  {
-    category: "Healthcare",
-    title: "MedTech Analytics",
-    description: "AI-powered diagnostics dashboard for modern hospitals.",
-    gradient: "from-emerald-500/20 to-teal-500/20",
-    hoverGradient: "group-hover:from-emerald-500/40 group-hover:to-teal-500/40",
-    size: "small",
-  },
-  {
-    category: "Real Estate",
-    title: "Urban Living",
-    description: "Smart city integration for modern residential complexes.",
-    gradient: "from-rose-500/20 to-pink-500/20",
-    hoverGradient: "group-hover:from-rose-500/40 group-hover:to-pink-500/40",
-    size: "large",
-  },
-];
+import { ALL_PROJECTS } from "@/lib/portfolio-data";
+
+const SELECTED_IDS = ["finedge-banking-core", "luxeretail-launch", "healthverify-portal", "global-logistics-grid"];
+
+const PROJECTS = ALL_PROJECTS
+  .filter(p => SELECTED_IDS.includes(p.id))
+  .map(p => ({
+    ...p,
+    description: p.shortDescription,
+    hoverGradient: p.id === "finedge-banking-core" ? "group-hover:from-blue-500/40 group-hover:to-purple-500/40" 
+      : p.id === "luxeretail-launch" ? "group-hover:from-amber-500/40 group-hover:to-orange-500/40"
+      : p.id === "healthverify-portal" ? "group-hover:from-emerald-500/40 group-hover:to-teal-500/40"
+      : "group-hover:from-zinc-500/40 group-hover:to-gray-500/40",
+    size: (p.id === "finedge-banking-core" || p.id === "global-logistics-grid") ? "large" : "small"
+  }));
 
 const cardVariants = {
   hidden: { opacity: 0, y: 20 },
@@ -48,7 +29,7 @@ const cardVariants = {
     transition: {
       delay: i * 0.1,
       duration: 0.5,
-      ease: "easeOut",
+      ease: "easeOut" as const,
     },
   }),
 };
@@ -107,7 +88,7 @@ function BentoCard({ project, index }: { project: typeof PROJECTS[0]; index: num
         </div>
       </div>
 
-      <Link href="/portfolio" className="absolute inset-0 z-10">
+      <Link href={`/portfolio/${project.id}`} className="absolute inset-0 z-10">
         <span className="sr-only">View {project.title}</span>
       </Link>
     </motion.div>

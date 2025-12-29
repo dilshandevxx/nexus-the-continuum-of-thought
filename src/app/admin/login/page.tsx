@@ -1,27 +1,25 @@
 "use client";
 
-import { useState } from "react";
+import { useActionState, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { Lock, ArrowRight } from "lucide-react";
+import { Lock, ArrowRight, Loader2 } from "lucide-react";
 import { motion } from "framer-motion";
+import { login } from "@/app/actions/auth"; // Correct import path
+import { toast } from "sonner"; // Assuming sonner is installed
+
+const initialState = {
+  error: "",
+};
 
 export default function AdminLogin() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
-  const router = useRouter();
+  // useActionState is the new hook in Next.js 14/15 replacing useFormState for server actions
+  const [state, formAction, isPending] = useActionState(login, initialState); 
 
-  const handleLogin = async (e: React.FormEvent) => {
-    e.preventDefault();
-    // Temporary Hardcoded Auth for demonstration
-    // In real app, verify against DB Admin table with proper hashing
-    if (email === "admin@nexus.com" && password === "admin123") {
-      document.cookie = "admin_session=true; path=/";
-      router.push("/admin");
-    } else {
-      setError("Invalid credentials");
+  useEffect(() => {
+    if (state?.error) {
+      toast.error(state.error);
     }
-  };
+  }, [state]);
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-black px-4">
@@ -44,34 +42,39 @@ export default function AdminLogin() {
             <p className="text-zinc-500">Enter your secure credentials</p>
         </div>
 
-        <form onSubmit={handleLogin} className="space-y-4">
+        <form action={formAction} className="space-y-4">
             <div>
                 <input 
+                    name="email"
                     type="email" 
+                    required
                     placeholder="Email Address"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
                     className="w-full rounded-xl border border-white/10 bg-black/50 px-4 py-3 text-white placeholder-zinc-600 focus:border-white/30 focus:outline-none focus:ring-1 focus:ring-white/30"
                 />
             </div>
             <div>
                  <input 
+                    name="password"
                     type="password" 
+                    required
                     placeholder="Password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
                     className="w-full rounded-xl border border-white/10 bg-black/50 px-4 py-3 text-white placeholder-zinc-600 focus:border-white/30 focus:outline-none focus:ring-1 focus:ring-white/30"
                 />
             </div>
             
-            {error && <p className="text-center text-sm text-red-400">{error}</p>}
+            {state?.error && <p className="text-center text-sm text-red-400">{state.error}</p>}
 
             <button 
                 type="submit"
-                className="w-full flex items-center justify-center gap-2 rounded-xl bg-white py-3 font-bold text-black transition-transform hover:scale-[1.02]"
+                disabled={isPending}
+                className="w-full flex items-center justify-center gap-2 rounded-xl bg-white py-3 font-bold text-black transition-transform hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed"
             >
-                Login to Dashboard
-                <ArrowRight size={18} />
+                {isPending ? <Loader2 className="animate-spin" size={18} /> : (
+                  <>
+                    Login to Dashboard
+                    <ArrowRight size={18} />
+                  </>
+                )}
             </button>
         </form>
       </motion.div>
