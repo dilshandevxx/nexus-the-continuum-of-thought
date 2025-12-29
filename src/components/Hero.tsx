@@ -1,7 +1,7 @@
 "use client";
 
-import { useEffect, useState, useMemo } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { useEffect, useState, useMemo, useRef } from "react";
+import { motion, AnimatePresence, useMotionValue, useTransform, MotionValue } from "framer-motion";
 import Image from "next/image";
 import { ArrowUpRight } from "lucide-react";
 
@@ -223,10 +223,70 @@ function RandomRevealText({ words, onComplete }: { words: string[], onComplete: 
     );
 }
 
+// --- PARALLAX IMAGE COMPONENT ---
+function ParallaxImage({ el, mouseX, mouseY }: { el: any, mouseX: MotionValue<number>, mouseY: MotionValue<number> }) {
+    // Unique depth factor for each image (random between 20 and 80)
+    // We use a fixed value based on the element's start properties to keep it stable across renders if useMemo isn't enough
+    const depth = 20 + (el.id * 10) % 60; // Deterministic depth based on ID to avoid hydration mismatch
+    
+    const x = useTransform(mouseX, [-1, 1], [-depth, depth]);
+    const y = useTransform(mouseY, [-1, 1], [-depth, depth]);
+
+    return (
+        <motion.div
+            className="absolute aspect-[4/3] w-64 overflow-hidden rounded-xl border border-white/10 bg-white/5 shadow-2xl backdrop-blur-sm"
+            style={{ x, y }} // Apply parallax here
+            initial={{ top: `${el.startTop}%`, left: `${el.startLeft}%`, scale: el.scale, opacity: 0 }}
+            animate={{ 
+                top: [`${el.startTop}%`, `${el.endTop}%`], 
+                left: [`${el.startLeft}%`, `${el.endLeft}%`],
+                opacity: [0, 0.4, 0],
+            }}
+            transition={{ duration: el.duration, ease: "linear", repeat: Infinity, delay: el.delay }}
+        >
+            <Image src={el.src} alt="Background" fill className="object-cover" />
+        </motion.div>
+    );
+}
+
+// --- MAGNETIC BUTTON COMPONENT ---
+function MagneticButton({ children }: { children: React.ReactNode }) {
+    const ref = useRef<HTMLDivElement>(null);
+    const [position, setPosition] = useState({ x: 0, y: 0 });
+  
+    const handleMouse = (e: React.MouseEvent) => {
+      const { clientX, clientY } = e;
+      const { height, width, left, top } = ref.current?.getBoundingClientRect() || { height: 0, width: 0, left: 0, top: 0 };
+      const middleX = clientX - (left + width / 2);
+      const middleY = clientY - (top + height / 2);
+      setPosition({ x: middleX, y: middleY });
+    };
+  
+    const reset = () => {
+      setPosition({ x: 0, y: 0 });
+    };
+  
+    const { x, y } = position;
+    return (
+      <motion.div
+        ref={ref}
+        onMouseMove={handleMouse}
+        onMouseLeave={reset}
+        animate={{ x, y }}
+        transition={{ type: "spring", stiffness: 150, damping: 15, mass: 0.1 }}
+      >
+        {children}
+      </motion.div>
+    );
+  }
+
 // --- MAIN HERO COMPONENT ---
 export function Hero() {
   const [phase, setPhase] = useState(1); // 1, 2, or 3
   const [isMounted, setIsMounted] = useState(false);
+  
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
 
   // Background animation logic (memoized)
   const backgroundElements = useMemo(() => {
@@ -249,7 +309,19 @@ export function Hero() {
 
   useEffect(() => {
     setIsMounted(true);
-  }, []);
+    
+    // Mouse tracking for parallax
+    const handleMouseMove = (e: MouseEvent) => {
+        // Normalize mouse position to -1 to 1
+        const x = (e.clientX / window.innerWidth) * 2 - 1;
+        const y = (e.clientY / window.innerHeight) * 2 - 1;
+        mouseX.set(x);
+        mouseY.set(y);
+    };
+
+    window.addEventListener("mousemove", handleMouseMove);
+    return () => window.removeEventListener("mousemove", handleMouseMove);
+  }, [mouseX, mouseY]);
 
   // Phase Transition Logic
   const handlePhaseComplete = () => {
@@ -265,19 +337,7 @@ export function Hero() {
       
       <div className="absolute inset-0 z-0 overflow-hidden">
         {isMounted && backgroundElements.map((el) => (
-            <motion.div
-                key={el.id}
-                className="absolute aspect-[4/3] w-64 overflow-hidden rounded-xl border border-white/10 bg-white/5 shadow-2xl backdrop-blur-sm"
-                initial={{ top: `${el.startTop}%`, left: `${el.startLeft}%`, scale: el.scale, opacity: 0 }}
-                animate={{ 
-                    top: [`${el.startTop}%`, `${el.endTop}%`], 
-                    left: [`${el.startLeft}%`, `${el.endLeft}%`],
-                    opacity: [0, 0.4, 0],
-                }}
-                transition={{ duration: el.duration, ease: "linear", repeat: Infinity, delay: el.delay }}
-            >
-                <Image src={el.src} alt="Background" fill className="object-cover" />
-            </motion.div>
+            <ParallaxImage key={el.id} el={el} mouseX={mouseX} mouseY={mouseY} />
         ))}
       </div>
 
@@ -300,8 +360,30 @@ export function Hero() {
 
         {/* Center: Title & Animation */}
         <div className="flex flex-1 flex-col items-center justify-center gap-8">
-            <div className="flex flex-col items-center">
-              <h1 className="text-[12vw] font-bold leading-none tracking-tighter text-white mix-blend-overlay md:text-[15vw]">
+            <div className="relative flex flex-col items-center">
+              {/* Glowing Nebula Effect */}
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-[60%] w-[120%] h-[120%] z-[-1] pointer-events-none">
+                  <motion.div
+                    className="w-full h-full rounded-full blur-[80px] opacity-40"
+                    animate={{
+                        background: [
+                            "radial-gradient(closest-side, rgba(59,130,246,0.6), transparent)", // Blue
+                            "radial-gradient(closest-side, rgba(168,85,247,0.6), transparent)", // Purple
+                            "radial-gradient(closest-side, rgba(6,182,212,0.6), transparent)", // Cyan
+                            "radial-gradient(closest-side, rgba(59,130,246,0.6), transparent)", // Loop
+                        ],
+                        scale: [0.8, 1.2, 0.8],
+                        rotate: [0, 90, 0],
+                    }}
+                    transition={{
+                        duration: 10,
+                        repeat: Infinity,
+                        ease: "easeInOut"
+                    }}
+                  />
+              </div>
+
+              <h1 className="relative text-[12vw] font-bold leading-none tracking-tighter text-white mix-blend-overlay md:text-[15vw]">
                   NEXUS
               </h1>
               
@@ -354,13 +436,18 @@ export function Hero() {
 
              {/* Buttons */}
             <div className="flex flex-col items-center justify-end gap-4 md:flex-row md:justify-center">
-                 <button className="group relative flex items-center gap-2 overflow-hidden rounded-lg bg-white px-8 py-4 text-sm font-bold uppercase tracking-wider text-black transition-all hover:bg-zinc-200">
-                    <span className="relative z-10">Require a Call</span>
-                    <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
-                 </button>
-                 <button className="whitespace-nowrap rounded-lg border border-white/20 bg-transparent px-8 py-4 text-sm font-bold uppercase tracking-wider text-white transition-all hover:bg-white hover:text-black">
+                 <MagneticButton>
+                     <button className="group relative flex items-center gap-2 overflow-hidden rounded-lg bg-white px-8 py-4 text-sm font-bold uppercase tracking-wider text-black transition-all hover:bg-zinc-200">
+                        <span className="relative z-10">Require a Call</span>
+                        <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
+                     </button>
+                 </MagneticButton>
+                 
+                 <MagneticButton>
+                     <button className="whitespace-nowrap rounded-lg border border-white/20 bg-transparent px-8 py-4 text-sm font-bold uppercase tracking-wider text-white transition-all hover:bg-white hover:text-black">
                     See All Services
-                 </button>
+                     </button>
+                 </MagneticButton>
             </div>
 
             {/* Description */}

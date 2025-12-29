@@ -10,6 +10,8 @@ export const metadata: Metadata = {
   description: "Engineering digital excellence for the world's most ambitious brands.",
 };
 
+// ... existing code ...
+
 export default function RootLayout({
   children,
 }: Readonly<{

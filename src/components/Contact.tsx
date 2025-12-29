@@ -14,7 +14,12 @@ export function Contact() {
       <div className="relative z-10 mx-auto flex max-w-7xl flex-col gap-16 px-8 md:px-12 lg:flex-row">
         
         {/* Contact Info */}
-        <div className="flex flex-1 flex-col justify-center gap-10">
+        <motion.div 
+            initial={{ opacity: 0, x: -50 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8 }}
+            className="flex flex-1 flex-col justify-center gap-10"
+        >
             <div>
                 <h2 className="mb-4 text-sm font-bold uppercase tracking-widest text-zinc-400">
                     Get in Touch
@@ -48,7 +53,7 @@ export function Contact() {
                     </motion.div>
                 ))}
             </div>
-        </div>
+        </motion.div>
 
         {/* Contact Form */}
         <div className="flex-1">

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Menu } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { Logo } from "@/components/ui/Logo";
 
 export function Navbar() {
   return (
@@ -8,20 +9,9 @@ export function Navbar() {
       <div className="mx-auto flex h-full max-w-7xl items-center justify-between px-4 md:px-12 lg:px-20">
         
         {/* Logo */}
-        <Link href="/" className="group flex items-center gap-2 text-xl font-bold tracking-tighter text-white">
-            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-white text-black shadow-[0_0_15px_rgba(255,255,255,0.3)] transition-transform group-hover:rotate-90">
-                <svg
-                width="20"
-                height="20"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                >
-                <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
-                </svg>
+        <Link href="/" className="group flex items-center gap-3 text-xl font-bold tracking-tighter text-white">
+            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-white text-black shadow-[0_0_20px_rgba(255,255,255,0.2)] transition-transform group-hover:scale-105">
+                <Logo className="h-6 w-6 text-black" />
             </div>
             NEXUS
         </Link>
