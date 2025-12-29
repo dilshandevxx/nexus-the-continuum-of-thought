@@ -131,82 +131,110 @@ export function About() {
               </motion.div>
             </div>
 
-             {/* Graphic Side - Neural Synapse */}
+             {/* Graphic Side - The Quantum Core */}
              <motion.div 
                 initial={{ opacity: 0, scale: 0.8 }}
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
                 transition={{ delay: 0.3, duration: 0.8 }}
-                className="relative hidden h-96 w-96 lg:flex items-center justify-center"
+                className="relative hidden h-96 w-96 lg:flex items-center justify-center perspective-[1000px]"
              >
-                <div className="absolute inset-0 -z-10 bg-white/5 blur-[80px] rounded-full" />
+                {/* Nebula Background - The "No Rules" Splash */}
+                <div className="absolute inset-0 -z-10 bg-gradient-to-tr from-violet-600/20 via-blue-600/20 to-amber-500/20 blur-[100px] rounded-full" />
                 
-                {/* Synapse Container */}
-                <div className="relative flex h-full w-full items-center justify-center">
+                {/* Core Container */}
+                <div className="relative flex h-full w-full items-center justify-center transform-style-3d">
                     
-                    {/* Central Core (The "Idea") */}
-                    <div className="relative z-10 flex h-20 w-20 items-center justify-center rounded-full bg-white shadow-[0_0_50px_rgba(255,255,255,0.3)]">
-                         <div className="absolute inset-0 animate-ping rounded-full bg-white/20" />
-                         <Brain className="h-8 w-8 text-black" />
-                    </div>
-
-                    {/* Radiating Connections */}
-                    {[...Array(8)].map((_, i) => (
+                    {/* 1. The Energy Field (Outer Particles) */}
+                    {[...Array(3)].map((_, i) => (
                         <motion.div
-                            key={i}
-                            className="absolute h-full w-2"
-                            style={{ rotate: `${i * 45}deg` }}
-                        >
-                            <motion.div
-                                animate={{ height: ["0%", "45%", "0%"], opacity: [0, 1, 0] }}
-                                transition={{ 
-                                    duration: 3, 
-                                    repeat: Infinity, 
-                                    delay: i * 0.2,
-                                    ease: "easeInOut"
-                                }}
-                                className="mx-auto mt-[50%] w-[1px] bg-gradient-to-t from-transparent via-white/50 to-transparent"
-                            />
-                            
-                            {/* Orbiting Node at end of path */}
-                            <motion.div
-                                animate={{ y: [0, -140, 0], opacity: [0, 1, 0] }}
-                                transition={{ 
-                                    duration: 3, 
-                                    repeat: Infinity, 
-                                    delay: i * 0.2,
-                                    ease: "easeInOut"
-                                }}
-                                className="absolute top-1/2 left-1/2 h-2 w-2 -translate-x-1/2 rounded-full bg-white"
-                            />
-                        </motion.div>
+                            key={`ring-${i}`}
+                            className="absolute h-80 w-80 rounded-full border border-transparent"
+                            style={{ 
+                                borderTopColor: i === 0 ? '#8b5cf6' : i === 1 ? '#3b82f6' : '#f59e0b', // Violet, Blue, Amber
+                                opacity: 0.3,
+                                rotateX: i * 60,
+                                rotateY: i * 30
+                            }}
+                            animate={{ rotateZ: 360 }}
+                            transition={{ duration: 15 + i * 5, repeat: Infinity, ease: "linear" }}
+                        />
                     ))}
 
-                    {/* Orbiting Satellite Rings */}
+                    {/* 2. The Geometric Cage (Cube) */}
                     <motion.div
-                        animate={{ rotate: 360 }}
-                        transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
-                        className="absolute h-64 w-64 rounded-full border border-dashed border-white/10"
-                    />
-                    <motion.div
-                        animate={{ rotate: -360 }}
-                        transition={{ duration: 35, repeat: Infinity, ease: "linear" }}
-                        className="absolute h-80 w-80 rounded-full border border-white/5"
+                        animate={{ rotateX: 360, rotateY: 360 }}
+                        transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+                        className="absolute h-48 w-48 border border-white/10 bg-white/5 backdrop-blur-sm"
+                        style={{ transformStyle: "preserve-3d" }}
                     >
-                         <div className="absolute top-0 left-1/2 h-2 w-2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-zinc-400" />
+                         {/* Glowing Edges */}
+                         <div className="absolute inset-x-0 top-0 h-[1px] bg-gradient-to-r from-transparent via-cyan-500 to-transparent" />
+                         <div className="absolute inset-x-0 bottom-0 h-[1px] bg-gradient-to-r from-transparent via-violet-500 to-transparent" />
+                         <div className="absolute inset-y-0 left-0 w-[1px] bg-gradient-to-b from-transparent via-amber-500 to-transparent" />
+                         <div className="absolute inset-y-0 right-0 w-[1px] bg-gradient-to-b from-transparent via-cyan-500 to-transparent" />
                     </motion.div>
+
+                    {/* 3. The Core Singularity (Sphere) */}
+                    <motion.div
+                        animate={{ scale: [1, 1.2, 1] }}
+                        transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+                        className="relative z-10 h-24 w-24 rounded-full bg-[#0c121e] border border-white/10 shadow-[0_0_50px_rgba(139,92,246,0.3)] flex items-center justify-center overflow-hidden"
+                    >
+                        {/* Fluid Gradient Inside */}
+                        <motion.div 
+                            className="absolute inset-0 bg-gradient-to-br from-violet-600 to-blue-600 opacity-50"
+                            animate={{ rotate: 360 }}
+                            transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
+                        />
+                        <div className="relative z-20">
+                            <Zap className="h-10 w-10 text-white drop-shadow-[0_0_10px_rgba(255,255,255,0.8)]" fill="currentColor" />
+                        </div>
+                    </motion.div>
+
+                    {/* Floating Particles */}
+                    {[...Array(20)].map((_, i) => (
+                        <motion.div
+                            key={`p-${i}`}
+                            className="absolute h-1 w-1 rounded-full bg-white"
+                            initial={{ x: 0, y: 0, opacity: 0 }}
+                            animate={{ 
+                                x: (Math.random() - 0.5) * 300, 
+                                y: (Math.random() - 0.5) * 300, 
+                                opacity: [0, 1, 0],
+                                scale: [0, 1.5, 0] 
+                            }}
+                            transition={{ 
+                                duration: 3 + Math.random() * 2, 
+                                repeat: Infinity, 
+                                delay: Math.random() * 2,
+                                ease: "easeOut" 
+                            }}
+                        />
+                    ))}
 
                 </div>
 
-                {/* Floating "Intelligence" Card */}
+                {/* Glass Cards - "Artifacts" */}
                 <motion.div 
-                    animate={{ y: [0, -10, 0] }}
-                    transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-                    className="absolute bottom-10 right-0 z-20 rounded-xl border border-white/10 bg-black/40 p-3 backdrop-blur-md"
+                    animate={{ y: [0, -15, 0] }}
+                    transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+                    className="absolute top-0 right-[-20px] z-20 rounded-xl border border-white/10 bg-black/40 p-3 backdrop-blur-md shadow-[0_0_20px_rgba(139,92,246,0.2)]"
                 >
                     <div className="flex items-center gap-2">
-                        <Sparkles size={14} className="text-white" />
-                        <span className="text-xs font-medium text-white">Artificial Intelligence</span>
+                        <Sparkles size={14} className="text-violet-400" />
+                        <span className="text-xs font-bold text-transparent bg-clip-text bg-gradient-to-r from-violet-400 to-blue-400">Limitless</span>
+                    </div>
+                </motion.div>
+
+                <motion.div 
+                    animate={{ y: [0, 15, 0] }}
+                    transition={{ duration: 7, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+                    className="absolute bottom-10 left-[-20px] z-20 rounded-xl border border-white/10 bg-black/40 p-3 backdrop-blur-md shadow-[0_0_20px_rgba(59,130,246,0.2)]"
+                >
+                    <div className="flex items-center gap-2">
+                        <Rocket size={14} className="text-blue-400" />
+                        <span className="text-xs font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-400">Future Ready</span>
                     </div>
                 </motion.div>
 
