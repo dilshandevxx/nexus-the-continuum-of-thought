@@ -131,56 +131,71 @@ export function About() {
               </motion.div>
             </div>
 
-             {/* Graphic Side - Precision Gyroscope */}
+             {/* Graphic Side - Global Nexus */}
              <motion.div 
                 initial={{ opacity: 0, scale: 0.8 }}
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
                 transition={{ delay: 0.3, duration: 0.8 }}
-                className="relative hidden h-96 w-96 lg:flex items-center justify-center"
+                className="relative hidden h-96 w-96 lg:flex items-center justify-center perspective-[1000px]"
              >
                 <div className="absolute inset-0 -z-10 bg-white/5 blur-[80px] rounded-full" />
                 
-                {/* Gyroscope Container */}
-                <div className="relative flex h-full w-full items-center justify-center perspective-[1000px]">
-                    
-                    {/* Outer Ring */}
+                {/* Globe Container */}
+                <div className="relative h-64 w-64 transform-style-3d">
                     <motion.div
-                        animate={{ rotateX: 360, rotateY: 360, rotateZ: 360 }}
+                        animate={{ rotateY: 360 }}
                         transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-                        className="absolute h-80 w-80 rounded-full border border-white/20 shadow-[0_0_30px_rgba(255,255,255,0.05)]"
-                        style={{ transformStyle: "preserve-3d" }}
-                    />
-
-                    {/* Middle Ring */}
-                    <motion.div
-                        animate={{ rotateX: 360, rotateY: -360, rotateZ: 180 }}
-                        transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
-                        className="absolute h-64 w-64 rounded-full border border-dashed border-white/30"
-                        style={{ transformStyle: "preserve-3d" }}
-                    />
-                    
-                     {/* Inner Ring */}
-                    <motion.div
-                        animate={{ rotateX: -360, rotateY: 360, rotateZ: -90 }}
-                        transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
-                        className="absolute h-48 w-48 rounded-full border-2 border-white/10"
-                        style={{ transformStyle: "preserve-3d" }}
+                        className="absolute inset-0 transform-style-3d"
                     >
-                         <div className="absolute top-0 left-1/2 h-3 w-3 -translate-x-1/2 -translate-y-1/2 rounded-full bg-white shadow-[0_0_15px_white]" />
-                    </motion.div>
+                         {/* Globe Dots */}
+                         {[...Array(40)].map((_, i) => {
+                             // Golden Angle distribution for even sphere coverage
+                             const phi = Math.acos(-1 + (2 * i) / 40);
+                             const theta = Math.sqrt(40 * Math.PI) * phi;
+                             
+                             const x = 120 * Math.cos(theta) * Math.sin(phi);
+                             const y = 120 * Math.sin(theta) * Math.sin(phi);
+                             const z = 120 * Math.cos(phi);
 
-                    {/* Central Core */}
-                    <motion.div 
-                        animate={{ scale: [1, 1.1, 1] }}
-                        transition={{ duration: 2, repeat: Infinity }}
-                        className="relative z-10 flex h-24 w-24 items-center justify-center rounded-full bg-white/5 backdrop-blur-sm border border-white/10"
-                    >
-                        <div className="absolute inset-0 rounded-full bg-white/10 animate-pulse" />
-                        <Target className="h-10 w-10 text-white" strokeWidth={1} />
-                    </motion.div>
+                             return (
+                                 <motion.div
+                                     key={i}
+                                     className="absolute h-1.5 w-1.5 rounded-full bg-white shadow-[0_0_5px_white]"
+                                     style={{
+                                         transform: `translate3d(${x}px, ${y}px, ${z}px)`,
+                                     }}
+                                     // Fade dots when they rotate to the back
+                                     animate={{ opacity: [0.2, 1, 0.2] }}
+                                     transition={{ 
+                                         duration: 20, 
+                                         repeat: Infinity, 
+                                         ease: "linear",
+                                         delay: -10 + (Math.atan2(x, z) / (2 * Math.PI)) * 20 // Phase based on rotation
+                                     }}
+                                 />
+                             );
+                         })}
+                         
+                         {/* Equator / Orbital Ring */}
+                         <div className="absolute top-1/2 left-1/2 h-80 w-80 -translate-x-1/2 -translate-y-1/2 rounded-full border border-white/10" style={{ transform: "rotateX(90deg)" }} />
+                         <div className="absolute top-1/2 left-1/2 h-80 w-80 -translate-x-1/2 -translate-y-1/2 rounded-full border border-dashed border-white/20" style={{ transform: "rotateX(90deg) rotateY(45deg)" }} />
 
+                    </motion.div>
                 </div>
+
+                {/* Floating "Reach" Card */}
+                <motion.div 
+                    animate={{ y: [0, -10, 0] }}
+                    transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+                    className="absolute bottom-4 right-0 z-20 rounded-xl border border-white/10 bg-black/40 p-3 backdrop-blur-md"
+                >
+                    <div className="flex items-center gap-2">
+                        <Globe size={14} className="text-white" />
+                        <span className="text-xs font-medium text-white">Borderless</span>
+                    </div>
+                </motion.div>
+
              </motion.div>
         </div>
 
