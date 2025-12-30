@@ -1,7 +1,7 @@
 import { ALL_PROJECTS } from "@/lib/portfolio-data";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
-import { ParticleBackground } from "@/components/ui/ParticleBackground";
+import { CalmBackground } from "@/components/ui/CalmBackground";
 import { ArrowLeft, CheckCircle, Calendar, User, Building } from "lucide-react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -26,7 +26,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ id: st
       <Navbar />
       
       <div className="relative pt-20">
-        <ParticleBackground />
+        <CalmBackground />
         
         {/* HERO SECTION */}
         <section className="relative z-10 px-6 py-20 md:px-12 lg:px-20 lg:py-32">

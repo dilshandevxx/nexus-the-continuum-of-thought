@@ -1,6 +1,6 @@
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
-import { ParticleBackground } from "@/components/ui/ParticleBackground";
+import { CalmBackground } from "@/components/ui/CalmBackground";
 import { Contact } from "@/components/Contact";
 
 export default function ContactPage() {
@@ -8,7 +8,7 @@ export default function ContactPage() {
     <main className="min-h-screen bg-black">
       <Navbar />
       <div className="relative w-full pt-20">
-         <ParticleBackground />
+         <CalmBackground />
          <div className="relative z-10">
             <Contact />
          </div>

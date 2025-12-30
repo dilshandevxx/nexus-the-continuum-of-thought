@@ -1,7 +1,8 @@
 import prisma from "@/lib/prisma";
 import { logout } from "@/app/actions/auth";
 import { LogOut } from "lucide-react";
-// If not available, I will just format date manually to keep it simple without installing more deps.
+
+export const dynamic = "force-dynamic";
 
 export default async function AdminDashboard() {
   const [projectCount, serviceCount, messageCount, unreadCount] = await Promise.all([

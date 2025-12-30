@@ -49,13 +49,11 @@ const PHILOSOPHY = [
   }
 ];
 
-import { RippleBackground } from "@/components/ui/RippleBackground";
-
-// ... existing imports
+import { StarFieldBackground } from "@/components/ui/StarFieldBackground";
 
 export function DetailedTechExpertise() {
   return (
-    <RippleBackground className="w-full min-h-screen text-white">
+    <StarFieldBackground className="w-full min-h-screen text-white">
     <div className="flex flex-col gap-32 pb-32">
       
       {/* 1. Hero / Intro */}
@@ -84,8 +82,9 @@ export function DetailedTechExpertise() {
                         key={i}
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
+                        whileHover={{ scale: 1.02 }}
                         transition={{ delay: i * 0.1 }}
-                        className="group relative flex flex-col gap-6 rounded-3xl border border-white/10 bg-white/5 p-8 transition-all hover:border-white/20 hover:bg-white/10 hover:shadow-2xl hover:shadow-blue-500/10"
+                        className="group relative flex flex-col gap-6 rounded-3xl border border-white/10 bg-white/5 p-8 transition-all hover:border-white/20 hover:bg-white/10 hover:shadow-2xl hover:shadow-cyan-500/10"
                     >
                         <div className="flex items-center gap-4">
                             <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-white to-zinc-400 text-black shadow-lg">
@@ -123,16 +122,16 @@ export function DetailedTechExpertise() {
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         transition={{ delay: i * 0.1 }}
-                        className="group relative flex flex-col gap-6 rounded-3xl border border-white/10 bg-gradient-to-b from-white/[0.08] to-transparent p-8 transition-all duration-300 hover:-translate-y-2 hover:border-amber-500/30 hover:shadow-2xl hover:shadow-amber-500/20"
+                        className="group relative flex flex-col gap-6 rounded-3xl border border-white/10 bg-gradient-to-b from-white/[0.08] to-transparent p-8 transition-all duration-300 hover:-translate-y-2 hover:border-cyan-500/30 hover:shadow-2xl hover:shadow-cyan-500/20"
                     >
-                        <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-amber-500/5 via-transparent to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+                        <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-cyan-500/5 via-transparent to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
                         
-                        <div className="relative mb-2 flex h-16 w-16 items-center justify-center rounded-2xl bg-amber-500/10 text-amber-500 shadow-inner ring-1 ring-white/10 transition-transform duration-300 group-hover:scale-110 group-hover:bg-amber-500 group-hover:text-black">
+                        <div className="relative mb-2 flex h-16 w-16 items-center justify-center rounded-2xl bg-cyan-500/10 text-cyan-500 shadow-inner ring-1 ring-white/10 transition-transform duration-300 group-hover:scale-110 group-hover:bg-cyan-500 group-hover:text-black">
                             <item.icon className="h-8 w-8" />
                         </div>
                         
                         <div className="relative">
-                            <h4 className="mb-3 text-2xl font-bold text-white group-hover:text-amber-400 transition-colors">{item.title}</h4>
+                            <h4 className="mb-3 text-2xl font-bold text-white group-hover:text-cyan-400 transition-colors">{item.title}</h4>
                             <p className="text-lg leading-relaxed text-zinc-400 group-hover:text-zinc-300">{item.desc}</p>
                         </div>
                     </motion.div>
@@ -142,6 +141,6 @@ export function DetailedTechExpertise() {
       </section>
 
     </div>
-    </RippleBackground>
+    </StarFieldBackground>
   );
 }

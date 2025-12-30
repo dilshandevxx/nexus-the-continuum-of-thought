@@ -1,6 +1,6 @@
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
-import { ServicesBackground } from "@/components/ui/ServicesBackground";
+import { CalmBackground } from "@/components/ui/CalmBackground";
 import { DetailedServices } from "@/components/DetailedServices";
 
 export default function ServicesPage() {
@@ -8,7 +8,7 @@ export default function ServicesPage() {
     <main className="min-h-screen bg-black">
       <Navbar />
       <div className="relative w-full pt-20">
-         <ServicesBackground />
+         <CalmBackground />
          <div className="relative z-10">
             <DetailedServices />
          </div>

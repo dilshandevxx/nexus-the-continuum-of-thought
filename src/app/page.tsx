@@ -6,7 +6,7 @@ import { Portfolio } from "@/components/Portfolio";
 import { TechExpertise } from "@/components/TechExpertise";
 import { Contact } from "@/components/Contact";
 import { Footer } from "@/components/Footer";
-import { ParticleBackground } from "@/components/ui/ParticleBackground";
+import { GridBackground } from "@/components/ui/GridBackground";
 
 export default function Home() {
   return (
@@ -14,7 +14,7 @@ export default function Home() {
       <Navbar />
       <Hero />
       <div className="relative w-full bg-black">
-         <ParticleBackground />
+         <GridBackground />
          <div className="relative z-10">
             <About />
             <Services isPreview />

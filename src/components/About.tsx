@@ -4,6 +4,7 @@ import { motion, useInView } from "framer-motion";
 import { useEffect, useState, useRef } from "react";
 import { Lightbulb, Target, ShieldCheck, Users, Rocket, Award, Globe, Zap, Cpu, Layers, Code, Brain, Sparkles, Triangle } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { AboutGraphic } from "./ui/AboutGraphic";
 
 const STATS = [
     { label: "Years of Excellence", value: 12, suffix: "+" },
@@ -71,10 +72,9 @@ function CountingNumber({ value, duration = 2 }: { value: number, duration?: num
 
 export function About() {
   return (
-    <section className="relative w-full overflow-hidden bg-black/40 py-32 text-white">
+    <section className="relative w-full overflow-hidden py-32 text-white">
       {/* Background Elements */}
-      <div className="absolute top-0 right-0 -mr-32 -mt-32 h-[500px] w-[500px] rounded-full bg-indigo-500/10 blur-[100px]" />
-      <div className="absolute bottom-0 left-0 -ml-32 -mb-32 h-[500px] w-[500px] rounded-full bg-purple-500/10 blur-[100px]" />
+
 
       <div className="mx-auto flex max-w-7xl flex-col gap-32 px-6 md:px-12">
         
@@ -99,9 +99,9 @@ export function About() {
                 transition={{ delay: 0.1 }}
                 className="text-4xl font-bold leading-tight md:text-5xl lg:text-6xl"
               >
-                We are the architects of <br />
+                Architecting the <br />
                 <span className="text-white">
-                    digital transformation.
+                    future of digital reality.
                 </span>
               </motion.h2>
 
@@ -112,7 +112,7 @@ export function About() {
                 transition={{ delay: 0.2 }}
                 className="mt-8 text-lg text-zinc-400 leading-relaxed font-light md:text-xl"
               >
-                At <span className="font-bold text-white">NEXUS</span>, we believe that technology should be a limitless enabler. For over a decade, we have partnered with visionaries to engineer software that not only solves today's problems but anticipates tomorrow's opportunities.
+                We don't just build software; we engineer ecosystems. <span className="font-bold text-white">NEXUS</span> unites visionary strategy with surgical engineering to forge digital solutions that defy limits, define markets, and empower the future.
               </motion.p>
               
               <motion.div
@@ -123,15 +123,15 @@ export function About() {
                 className="mt-8 flex gap-4"
               >
                   <div className="flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-4 py-1.5 text-xs text-zinc-300">
-                      <Globe size={14} /> Global Reach
+                      <Globe size={14} /> Global Scale
                   </div>
                   <div className="flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-4 py-1.5 text-xs text-zinc-300">
-                      <Zap size={14} /> High Velocity
+                      <Zap size={14} /> Velocity & Precision
                   </div>
               </motion.div>
             </div>
 
-             {/* Graphic Side - Neural Synapse (Cyber Color) */}
+             {/* Graphic Side - Quantum Core */}
              <motion.div 
                 initial={{ opacity: 0, scale: 0.8 }}
                 whileInView={{ opacity: 1, scale: 1 }}
@@ -139,78 +139,9 @@ export function About() {
                 transition={{ delay: 0.3, duration: 0.8 }}
                 className="relative hidden h-96 w-96 lg:flex items-center justify-center"
              >
-                {/* Tech Glow Background */}
-                <div className="absolute inset-0 -z-10 bg-cyan-500/10 blur-[80px] rounded-full" />
-                
-                {/* Synapse Container */}
-                <div className="relative flex h-full w-full items-center justify-center">
-                    
-                    {/* Central Core (The "Idea") */}
-                    <div className="relative z-10 flex h-20 w-20 items-center justify-center rounded-full bg-[#0c121e] border border-cyan-500/30 shadow-[0_0_30px_rgba(6,182,212,0.2)]">
-                         <div className="absolute inset-0 animate-ping rounded-full bg-cyan-500/20" />
-                         <Brain className="h-8 w-8 text-cyan-400 drop-shadow-[0_0_8px_rgba(6,182,212,0.8)]" />
-                    </div>
-
-                    {/* Radiating Connections */}
-                    {[...Array(8)].map((_, i) => (
-                        <motion.div
-                            key={i}
-                            className="absolute h-full w-2"
-                            style={{ rotate: `${i * 45}deg` }}
-                        >
-                            <motion.div
-                                animate={{ height: ["0%", "45%", "0%"], opacity: [0, 1, 0] }}
-                                transition={{ 
-                                    duration: 3, 
-                                    repeat: Infinity, 
-                                    delay: i * 0.2,
-                                    ease: "easeInOut"
-                                }}
-                                className="mx-auto mt-[50%] w-[1px] bg-gradient-to-t from-transparent via-cyan-400 to-transparent shadow-[0_0_10px_cyan]"
-                            />
-                            
-                            {/* Orbiting Node at end of path */}
-                            <motion.div
-                                animate={{ y: [0, -140, 0], opacity: [0, 1, 0] }}
-                                transition={{ 
-                                    duration: 3, 
-                                    repeat: Infinity, 
-                                    delay: i * 0.2,
-                                    ease: "easeInOut"
-                                }}
-                                className="absolute top-1/2 left-1/2 h-2 w-2 -translate-x-1/2 rounded-full bg-cyan-300 shadow-[0_0_10px_cyan]"
-                            />
-                        </motion.div>
-                    ))}
-
-                    {/* Orbiting Satellite Rings */}
-                    <motion.div
-                        animate={{ rotate: 360 }}
-                        transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
-                        className="absolute h-64 w-64 rounded-full border border-dashed border-cyan-500/20"
-                    />
-                    <motion.div
-                        animate={{ rotate: -360 }}
-                        transition={{ duration: 35, repeat: Infinity, ease: "linear" }}
-                        className="absolute h-80 w-80 rounded-full border border-white/5"
-                    >
-                         <div className="absolute top-0 left-1/2 h-2 w-2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-blue-400 shadow-[0_0_10px_blue]" />
-                    </motion.div>
-
+                <div className="h-[500px] w-[500px]">
+                    <AboutGraphic />
                 </div>
-
-                {/* Floating "Intelligence" Card */}
-                <motion.div 
-                    animate={{ y: [0, -10, 0] }}
-                    transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-                    className="absolute bottom-10 right-0 z-20 rounded-xl border border-white/10 bg-black/40 p-3 backdrop-blur-md shadow-[0_0_20px_rgba(6,182,212,0.1)]"
-                >
-                    <div className="flex items-center gap-2">
-                        <Sparkles size={14} className="text-cyan-400" />
-                        <span className="text-xs font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500">Artificial Intelligence</span>
-                    </div>
-                </motion.div>
-
              </motion.div>
         </div>
 
