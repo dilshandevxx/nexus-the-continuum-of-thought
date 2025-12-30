@@ -14,154 +14,97 @@ export const CalmBackground = () => {
     let w = (canvas.width = window.innerWidth);
     let h = (canvas.height = window.innerHeight);
     let frameId: number;
-    let time = 0;
+    let particles: Particle[] = [];
 
     const resize = () => {
       w = canvas.width = window.innerWidth;
       h = canvas.height = window.innerHeight;
+      init();
     };
 
-    // Grid configuration
-    const gridSize = 40; // spacing
-    const speed = 0.5; // scrolling speed
-    
-    // Perspective & Wave configuration
-    const perspective = 300;
-    const orientationY = -100; // Moving camera up/down
-    const scale = 1.0;
+    class Particle {
+      x: number;
+      y: number;
+      size: number;
+      speedX: number;
+      speedY: number;
+      opacity: number;
+      fadeSpeed: number;
 
-    const draw = () => {
-      // Clear with very slight trailing effect for smoothness if desired, but clearRect is cleaner for this style
-      ctx.fillStyle = "#000000";
-      ctx.fillRect(0, 0, w, h);
-      
-      ctx.lineWidth = 1;
-      
-      const horizonY = h * 0.4; // Horizon line position
-      const bottomY = h;
+      constructor() {
+        this.x = Math.random() * w;
+        this.y = Math.random() * h;
+        // Varying sizes gives depth perception: smaller ones look further away
+        this.size = Math.random() * 1.5; 
+        // Very slow, drift-like movement
+        this.speedX = (Math.random() - 0.5) * 0.2; 
+        this.speedY = (Math.random() - 0.5) * 0.2; 
+        // Random starting opacity
+        this.opacity = Math.random() * 0.5 + 0.1;
+        // Twinkle speed
+        this.fadeSpeed = (Math.random() - 0.5) * 0.005; 
+      }
 
-      // We will draw a "floor" grid
-      // Calculate offset based on time for infinite scroll effect
-      const zOffset = (time * speed) % gridSize;
+      update() {
+        this.x += this.speedX;
+        this.y += this.speedY;
 
-      // Draw vertical lines (perspective lines)
-      // These appear to radiate from the vanishing point
-      for (let x = -w; x <= w * 2; x += gridSize) {
-        ctx.beginPath();
-        
-        // We simulate 3D simply by drawing lines from horizon to bottom
-        // But to add "undulation", we need to segment the lines
-        ctx.strokeStyle = "rgba(255, 255, 255, 0.05)";
-        
-        let started = false;
-        
-        // Iterate "Z" (depth) from far to near
-        for (let z = 0; z < h; z += 20) {
-            // Apply wave to Y
-            // x is the lateral position, z is the depth
-            const waveHeight = Math.sin((x / 200) + (time / 50)) * Math.cos((z / 200) + (time / 50)) * 20;
-            
-            // Simple perspective projection helper (pseudo)
-            // The further z is (smaller y on screen), the closer x is to center
-            const depthFactor = (z / h); // 0 at horizon, 1 at bottom
-            
-            // Vanishing point X is roughly center w/2
-            const vanishingX = w / 2;
-            
-            // Interpolate x towards vanishing point
-            // currentX = x * depthFactor^power + vanishingX * (1 - depthFactor)
-            // But let's stick to a simpler "floor" logic
-            
-            // Actual screen coordinates
-            const screenY = horizonY + z + waveHeight * depthFactor; // add wave scaling with depth
-            
-            // Perspective spreading for X
-            // At horizon (z=0), width is small. At bottom (z=h), width is large.
-            // Let's reverse Z for mental model: Z goes from "far" (0) to "near" (h)
-            
-            const perspectiveFactor = p => {
-               // p goes from 0 (horizon) to 1 (screen bottom)
-               return 0.1 + Math.pow(p, 2) * 5; // Exponential spread
-            };
-            
-            const spread = perspectiveFactor(z / (h - horizonY));
-            const screenX = vanishingX + (x - vanishingX) * spread;
-
-            if (screenY > h) continue; // optimization
-            if (screenY < 0) continue;
-
-            if (!started) {
-                ctx.moveTo(screenX, screenY);
-                started = true;
-            } else {
-                ctx.lineTo(screenX, screenY);
-            }
+        // Twinkle effect (oscillate opacity)
+        this.opacity += this.fadeSpeed;
+        if (this.opacity > 0.8 || this.opacity < 0.1) {
+            this.fadeSpeed = -this.fadeSpeed;
         }
-        ctx.stroke();
+
+        // Wrap around screen
+        if (this.x < 0) this.x = w;
+        if (this.x > w) this.x = 0;
+        if (this.y < 0) this.y = h;
+        if (this.y > h) this.y = 0;
       }
 
-      // Draw horizontal lines (lines parallel to horizon)
-      // These loop towards the viewer
-      const zStart = (time * speed) % 50; 
-      
-      for (let z = 0; z < h - horizonY; z += 40) {
-          // Virtual Z coordinate moving towards viewer
-          const currentZ = z + zStart; 
-          
-          ctx.beginPath();
-          ctx.strokeStyle = `rgba(255, 255, 255, ${0.03 + (currentZ / h) * 0.05})`; // Fade in as it gets closer
-          
-          let started = false;
-          
-          // Draw across the width
-          // We need to iterate X to capturing the wave
-          for (let x = -w; x <= w * 2; x += 40) {
-               
-               const waveHeight = Math.sin((x / 200) + (time / 50)) * Math.cos((currentZ / 200) + (time / 50)) * 20;
-               
-               const vanishingX = w / 2;
-               
-               // Reuse perspective logic
-               const horizonDist = currentZ; 
-               const depthFactor = horizonDist / (h - horizonY); // visual depth on screen
-               
-               const perspectiveFactor = p => {
-                   return 0.1 + Math.pow(p, 2) * 5; 
-               };
-               
-               const spread = perspectiveFactor(depthFactor);
-               
-               const screenY = horizonY + currentZ + waveHeight * depthFactor;
-               const screenX = vanishingX + (x - vanishingX) * spread;
-               
-               if (screenY > h) continue;
-
-               if (!started) {
-                   ctx.moveTo(screenX, screenY);
-                   started = true;
-               } else {
-                   ctx.lineTo(screenX, screenY);
-               }
-          }
-          ctx.stroke();
+      draw() {
+        if (!ctx) return;
+        ctx.beginPath();
+        // Soft white glow
+        ctx.fillStyle = `rgba(255, 255, 255, ${this.opacity})`;
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fill();
       }
-      
-      // Upper gradient to fade the horizon
-      const gradient = ctx.createLinearGradient(0, 0, 0, h);
-      gradient.addColorStop(0, "rgba(0,0,0,1)");
-      gradient.addColorStop(0.4, "rgba(0,0,0,1)"); // Solid black top
-      gradient.addColorStop(0.6, "rgba(0,0,0,0)"); // Fade to transparent
-      gradient.addColorStop(1, "rgba(0,0,0,0.5)"); // Vignette bottom
-      
-      ctx.fillStyle = gradient;
-      ctx.fillRect(0, 0, w, h);
+    }
 
-      time += 1;
-      frameId = requestAnimationFrame(draw);
+    const init = () => {
+      particles = [];
+      // Sparse count for "calm" feel. Not too crowded.
+      // Adjust density: (width * height) / density_factor
+      const particleCount = Math.floor((w * h) / 10000); 
+      for (let i = 0; i < particleCount; i++) {
+        particles.push(new Particle());
+      }
+    };
+
+    const animate = () => {
+      if (!ctx) return;
+      // Clear with slight trail if desired, but clean clear is better for stars
+      ctx.clearRect(0, 0, w, h);
+      
+      // Optional: Very subtle background gradient instead of pure black
+      // const grad = ctx.createLinearGradient(0, 0, 0, h);
+      // grad.addColorStop(0, "#050505");
+      // grad.addColorStop(1, "#000000");
+      // ctx.fillStyle = grad;
+      // ctx.fillRect(0,0,w,h);
+
+      particles.forEach((p) => {
+        p.update();
+        p.draw();
+      });
+
+      frameId = requestAnimationFrame(animate);
     };
 
     window.addEventListener("resize", resize);
-    frameId = requestAnimationFrame(draw);
+    init();
+    animate();
 
     return () => {
       window.removeEventListener("resize", resize);
@@ -170,11 +113,13 @@ export const CalmBackground = () => {
   }, []);
 
   return (
-    <div className="fixed inset-0 z-0 overflow-hidden bg-black pointer-events-none">
+    <div className="fixed inset-0 z-0 overflow-hidden bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-slate-950 via-black to-black pointer-events-none">
         <canvas 
             ref={canvasRef} 
-            className="w-full h-full opacity-60" 
+            className="w-full h-full" 
         />
+        {/* Subtle noise overlay for texture if desired (optional) */}
+        {/* <div className="absolute inset-0 bg-transparent opacity-5" style={{backgroundImage: 'url("/noise.png")'}} ></div> */}
     </div>
   );
 };
